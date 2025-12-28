@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><title>CLABSI</title></head>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Bundle CLABSI</title>
+<style>
+body{margin:0;background:#E3F7F5;font-family:Arial}
+.container{width:85%;max-width:600px;margin:40px auto;background:white;padding:25px;border-radius:15px;box-shadow:0 0 15px rgba(0,0,0,.1)}
+h2{text-align:center;color:#00695c}
+label{display:block;margin-top:15px;font-weight:bold;color:#004d40}
+input[type="text"],input[type=date]{width:100%;padding:12px;border-radius:10px;border:2px solid #b2dfdb;margin-top:5px}
+.checkbox-group label{display:flex;gap:7px;margin:5px 0}
+button{width:100%;background:#009688;color:white;padding:14px;border:none;border-radius:10px;margin-top:20px;font-weight:bold}
+.back{display:block;width:100%;text-align:center;padding:12px;border-radius:10px;background:#e0f2f1;border:2px solid #009688;margin-top:10px;color:#00695c;font-weight:bold;text-decoration:none}
+</style>
+</head>
 <body>
-
+<div class="container">
 <h2>Form Bundle CLABSI</h2>
 
-<label>Tanggal: <input type="date"></label><br><br>
-<label>Ruangan: <input type="text"></label><br><br>
-<label>Nama Pasien: <input type="text"></label><br><br>
+<label>Tanggal</label><input type="date">
+<label>Ruangan</label><input type="text">
+<label>Nama Pasien</label><input type="text">
+<label>No. Rekam Medis</label><input type="text">
 
-<p>Checklist:</p>
-<input type="checkbox"> Hand hygiene sebelum tindakan <br>
-<input type="checkbox"> Antiseptik chlorhexidine <br>
-<input type="checkbox"> Barrier steril penuh <br>
-<input type="checkbox"> Balutan steril terawat <br>
-<input type="checkbox"> Review harian kebutuhan CVC <br>
+<h4>Checklist Prosedur:</h4>
+<div class="checkbox-group">
+<label><input type="checkbox"> Hand hygiene</label>
+<label><input type="checkbox"> Maksimal barrier precaution</label>
+<label><input type="checkbox"> Antisepsis Chlorhexidine</label>
+<label><input type="checkbox"> Site insertion tepat</label>
+<label><input type="checkbox"> Daily review necessity</label>
+</div>
 
-<br><button>Simpan</button>
-
-<br><br><a href="index.html">⬅︎ Kembali ke Dashboard</a>
-
+<button>Simpan</button>
+<a href="index.html" class="back">← Kembali ke Dashboard</a>
+</div>
 </body>
 </html>
