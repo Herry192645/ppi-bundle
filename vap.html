@@ -3,102 +3,76 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Form Bundle VAP — Vertical</title>
+  <title>Form Bundle VAP — Narrow</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg: #f4fbfa;
-      --card: #ffffff;
-      --primary: #0b6b62;
-      --accent: #00a089;
-      --muted: #617f79;
-      --border: #e6f6f2;
+      --bg:#f4fbfa;
+      --card:#ffffff;
+      --primary:#0b6b62;
+      --accent:#00a089;
+      --muted:#617f79;
+      --border:#e6f6f2;
       --radius:12px;
       --touch:48px;
+      --max-width:420px; /* Ubah angka ini untuk mengatur lebar form */
     }
 
-    /* Reset */
     *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:#063c36;-webkit-font-smoothing:antialiased}
-    .wrap{max-width:760px;margin:20px auto;padding:16px}
-    .card{background:var(--card);border-radius:14px;padding:22px;box-shadow:0 12px 30px rgba(2,58,53,0.06);border:1px solid rgba(0,0,0,0.03)}
+    /* Centering & narrow container */
+    .wrap{max-width:var(--max-width);margin:18px auto;padding:12px}
+    .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 10px 26px rgba(2,58,53,0.06);border:1px solid rgba(0,0,0,0.03)}
 
-    h1{margin:0 0 16px;font-size:20px;color:var(--primary);text-align:center;font-weight:700}
+    h1{margin:0 0 12px;font-size:18px;color:var(--primary);text-align:center;font-weight:700}
 
-    form{display:flex;flex-direction:column;gap:14px}
+    form{display:flex;flex-direction:column;gap:12px}
     .field{display:flex;flex-direction:column;gap:6px}
     label{font-size:14px;font-weight:600;color:#0c594f}
     input[type="text"], input[type="date"], input[type="number"], textarea, select{
-      width:100%;
-      padding:12px 14px;
-      border-radius:10px;
-      border:2px solid var(--border);
-      font-size:15px;
-      background:#fff;
-      outline:none;
-      transition: border-color .12s, box-shadow .12s;
+      width:100%;padding:11px 12px;border-radius:10px;border:2px solid var(--border);font-size:15px;background:#fff;outline:none;transition:border-color .12s,box-shadow .12s;
     }
     input::placeholder{color:#9fbfb7}
     input:focus, textarea:focus, select:focus{border-color:var(--accent);box-shadow:0 8px 18px rgba(0,160,137,0.07)}
 
-    /* FORCE VERTICAL: do not use grid/columns anywhere */
-    /* Checkbox group - vertical list */
+    /* Vertical checkbox list */
     .checkbox-group{display:flex;flex-direction:column;gap:10px;margin-top:6px}
-    .checkbox-row{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:12px 14px;
-      border-radius:10px;
-      background:linear-gradient(180deg,#fbfffe,#f8fffd);
-      border:1px solid rgba(3,47,43,0.03);
-      cursor:pointer;
-      transition: background .12s, transform .08s, box-shadow .12s;
-      min-height:48px;
-    }
-    .checkbox-row:hover{ background: linear-gradient(180deg,#ffffff,#f3fffb); transform: translateY(-2px); }
-    .checkbox-row input[type="checkbox"]{
-      appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:4px;border:2px solid #cfeee8;background:#fff;position:relative;flex:0 0 auto;cursor:pointer;
-    }
+    .checkbox-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:linear-gradient(180deg,#fbfffe,#f8fffd);border:1px solid rgba(3,47,43,0.03);cursor:pointer;transition:transform .08s,box-shadow .12s;min-height:44px}
+    .checkbox-row:hover{ transform: translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,0.04); }
+    .checkbox-row input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:4px;border:2px solid #cfeee8;background:#fff;position:relative;flex:0 0 auto}
     .checkbox-row input[type="checkbox"]:checked{ background: linear-gradient(180deg,var(--accent),var(--primary)); border-color: transparent; }
-    .checkbox-row input[type="checkbox"]:checked::after{
-      content:""; position:absolute; left:7px; top:3px; width:6px; height:11px; border:solid white; border-width:0 2px 2px 0; transform:rotate(45deg);
-    }
+    .checkbox-row input[type="checkbox"]:checked::after{ content:""; position:absolute; left:7px; top:4px; width:6px; height:11px; border:solid white; border-width:0 2px 2px 0; transform:rotate(45deg); }
     .checkbox-label{font-size:15px;color:#074e47;font-weight:600}
 
     .helper{font-size:13px;color:var(--muted);margin-top:6px}
 
-    /* Buttons vertical stacked (always) */
+    /* Buttons stacked, full width */
     .actions{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:10px;font-weight:700;font-size:16px;cursor:pointer;border:0;text-decoration:none;color:white;will-change:transform,box-shadow;
-    }
-    .btn-primary{background:linear-gradient(180deg,var(--accent),var(--primary));box-shadow:0 10px 28px rgba(2,123,103,0.12);width:100%}
-    .btn-ghost{background:#fff;border:2px solid var(--border);color:var(--primary);width:100%;padding:11px 14px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;border:0;text-decoration:none;color:white;will-change:transform,box-shadow}
+    .btn-primary{background:linear-gradient(180deg,var(--accent),var(--primary));box-shadow:0 10px 26px rgba(2,123,103,0.12);width:100%}
+    .btn-ghost{background:#fff;border:2px solid var(--border);color:var(--primary);width:100%;padding:11px}
 
-    /* Hover effect for pointer devices (desktop) */
+    /* Hover animation (desktop pointer) */
     @media (hover: hover) and (pointer: fine){
       .btn{transition:transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms linear}
-      .btn:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 40px rgba(3,66,58,0.12); }
-      .btn:active{ transform: translateY(-3px) scale(0.998); box-shadow: 0 12px 26px rgba(3,66,58,0.10); }
+      .btn:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 36px rgba(3,66,58,0.12); }
+      .btn:active{ transform: translateY(-3px) scale(0.998); box-shadow: 0 10px 22px rgba(3,66,58,0.10); }
       .checkbox-row:hover{ transform: translateY(-3px); }
     }
 
-    /* Touch devices: press feedback */
+    /* Touch devices press feedback */
     @media (hover: none) and (pointer: coarse){
       .btn{transition:transform 120ms ease}
       .btn:active{ transform: translateY(-2px) scale(0.996) }
     }
 
-    /* Focus accessibility */
-    .btn:focus-visible, .checkbox-row:focus-within{ outline:none; box-shadow:0 0 0 6px rgba(0,160,137,0.10); transform: translateY(-6px) scale(1.01); }
-
     /* Small screens tweak */
-    @media (max-width:420px){
-      .card{padding:16px}
-      h1{font-size:18px}
-      .checkbox-row{padding:10px}
-      input[type="date"]{height:44px}
+    @media (max-width:360px){
+      :root{ --max-width:340px; }
+      .card{padding:14px}
+      h1{font-size:17px}
+      input[type="text"], input[type="date"]{font-size:14px;padding:10px}
+      .checkbox-row{padding:9px}
     }
   </style>
 </head>
@@ -149,11 +123,9 @@
   </div>
 
   <script>
-    // Save to localStorage + small animation feedback when saved
     (function(){
       const form = document.getElementById('vapForm');
       const saveBtn = document.getElementById('saveBtn');
-
       form.addEventListener('submit', function(e){
         e.preventDefault();
         const data = {
@@ -164,21 +136,16 @@
           checks: Array.from(form.querySelectorAll('input[type="checkbox"]')).filter(c=>c.checked).map(c=>c.name),
           savedAt: new Date().toISOString()
         };
-
         try {
           const list = JSON.parse(localStorage.getItem('vapRecords') || '[]');
           list.push(data);
           localStorage.setItem('vapRecords', JSON.stringify(list));
-
-          // Visual cue: small pulse using Web Animations API (works on modern browsers)
           if (saveBtn && saveBtn.animate) {
             saveBtn.animate([
-              { transform: 'translateY(-6px) scale(1.02)', boxShadow: '0 20px 40px rgba(3,66,58,0.12)' },
-              { transform: 'translateY(-2px) scale(1.00)', boxShadow: '0 12px 26px rgba(3,66,58,0.10)' }
-            ], { duration: 300, easing: 'ease-out' });
+              { transform: 'translateY(-6px) scale(1.02)' },
+              { transform: 'translateY(-2px) scale(1.00)' }
+            ], { duration: 260, easing: 'ease-out' });
           }
-
-          // brief success feedback
           setTimeout(()=>{ alert('Data tersimpan.'); form.reset(); }, 140);
         } catch(err){
           console.error(err);
