@@ -3,124 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Bundle VAP</title>
-
+<title>Form Bundle CAUTI</title>
 <style>
-    body {
-        margin: 0;
-        background-color: #E3F7F5;
-        font-family: Arial, sans-serif;
-    }
-
-    .container {
-        width: 85%;
-        max-width: 600px;
-        margin: 40px auto;
-        background: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-        text-align: center;
-        color: #00695c;
-    }
-
-    label {
-        font-weight: bold;
-        display: block;
-        margin-top: 15px;
-        color: #004d40;
-    }
-
-    input[type="text"],
-    input[type="date"] {
-        width: 100%;
-        padding: 12px;
-        border-radius: 10px;
-        border: 2px solid #b2dfdb;
-        margin-top: 5px;
-        margin-bottom: 10px;
-    }
-
-    .checkbox-group {
-        margin-top: 15px;
-    }
-
-    .checkbox-group label {
-        font-weight: normal;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin: 5px 0;
-    }
-
-    button {
-        width: 100%;
-        background: #009688;
-        color: white;
-        padding: 14px;
-        border: none;
-        border-radius: 10px;
-        margin-top: 20px;
-        font-size: 16px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    button:hover {
-        background: #00796b;
-    }
-
-    .back {
-        width: 100%;
-        display: block;
-        text-align: center;
-        padding: 12px;
-        border-radius: 10px;
-        background: #e0f2f1;
-        border: 2px solid #009688;
-        color: #00695c;
-        margin-top: 10px;
-        font-weight: bold;
-        text-decoration: none;
-    }
-
-    .back:hover {
-        background: #b2dfdb;
-    }
-
+body{margin:0;background:#E3F7F5;font-family:Arial, sans-serif;display:flex;justify-content:center;}
+.container{width:100%;max-width:600px;margin:40px auto;background:white;padding:30px;border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,0.1);box-sizing:border-box;}
+h2{text-align:center;color:#00695c;margin-bottom:30px;font-size:26px;}
+label{font-weight:bold;color:#004d40;margin-top:18px;display:block;}
+input[type="text"],input[type="date"]{width:100%;padding:12px;border-radius:10px;border:2px solid #b2dfdb;
+margin-top:5px;margin-bottom:10px;box-sizing:border-box;}
+.checkbox-group label{display:flex;gap:10px;margin:6px 0;color:#004d40;}
+button{width:100%;padding:14px;background:#009688;color:white;border:none;border-radius:10px;font-weight:bold;
+margin-top:20px;cursor:pointer;}
+.back{display:block;width:100%;text-align:center;padding:12px;border-radius:10px;border:2px solid #009688;
+background:#E0F2F1;color:#00695c;margin-top:12px;text-decoration:none;font-weight:bold;}
 </style>
 </head>
 <body>
-
 <div class="container">
-    <h2>Form Bundle VAP</h2>
 
-    <label>Tanggal</label>
-    <input type="date">
+<h2>Form Bundle CAUTI</h2>
 
-    <label>Ruangan</label>
-    <input type="text" placeholder="Contoh: ICU">
+<label>Tanggal</label><input type="date">
+<label>Ruangan</label><input type="text" placeholder="Contoh: ICU">
+<label>Nama Pasien</label><input type="text" placeholder="Nama pasien">
+<label>No. Rekam Medis</label><input type="text" placeholder="123456">
 
-    <label>Nama Pasien</label>
-    <input type="text" placeholder="Nama pasien">
-
-    <label>No. Rekam Medis</label>
-    <input type="text" placeholder="123456">
-
-    <div class="checkbox-group">
-        <label><input type="checkbox"> Head of bed 30°–45°</label>
-        <label><input type="checkbox"> Oral Hygiene CHG</label>
-        <label><input type="checkbox"> Sedation vacation</label>
-        <label><input type="checkbox"> Peptic ulcer prophylaxis</label>
-        <label><input type="checkbox"> DVT prophylaxis</label>
-    </div>
-
-    <button>Simpan</button>
-    <a href="index.html" class="back">← Kembali ke Dashboard</a>
+<label>Checklist Prosedur:</label>
+<div class="checkbox-group">
+<label><input type="checkbox"> Hand hygiene sebelum tindakan</label>
+<label><input type="checkbox"> Teknik aseptik saat pemasangan</label>
+<label><input type="checkbox"> Indikasi kateter selalu dievaluasi</label>
+<label><input type="checkbox"> Sistem kateter tertutup</label>
+<label><input type="checkbox"> Posisi drainage lebih rendah dari kandung kemih</label>
+<label><input type="checkbox"> Pengosongan urine tanpa kontaminasi</label>
 </div>
 
+<button>Simpan</button>
+<a href="index.html" class="back">⟵ Kembali ke Dashboard</a>
+
+</div>
 </body>
 </html>
