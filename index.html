@@ -1,21 +1,78 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Dashboard Sistem Laporan Bundle PPI RS. Bunda Aliyah Hospital</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Sistem Laporan Bundle PPI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f2f8f7;
+            color: #003c3c;
+        }
+        header {
+            text-align: center;
+            background: #dff7f3;
+            padding: 25px;
+            border-bottom: 4px solid #0c9488;
+        }
+        header img {
+            width: 120px;
+            display: block;
+            margin: 0 auto 10px auto;
+        }
+        h1 {
+            margin: 5px 0;
+            font-size: 26px;
+            font-weight: bold;
+        }
+        h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #005a5a;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 30px auto;
+            text-align: left;
+        }
+        a {
+            display: block;
+            padding: 12px;
+            margin: 8px 0;
+            background: #0c9488;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        a:hover {
+            background: #086a63;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Dashboard Sistem Laporan Bundle PPI</h1>
-<h2>RS. Bunda Aliyah Hospital</h2>
+<header>
+    <img src="logo.png" alt="Logo RS">
+    <h1>RS. Bunda Aliyah Hospital</h1>
+    <h2>Dashboard Sistem Laporan Bundle PPI – Tipe B</h2>
+</header>
 
-<p>Silakan pilih jenis bundle:</p>
+<div class="container">
+    <p><b>Silakan pilih jenis bundle untuk pengisian data:</b></p>
 
-<p><a href="vap.html">Bundle VAP</a></p>
-<p><a href="cauti.html">Bundle CAUTI</a></p>
-<p><a href="clabsi.html">Bundle CLABSI</a></p>
-<p><a href="ssi.html">Bundle SSI</a></p>
-<p><a href="handhygiene.html">Hand Hygiene</a></p>
+    <a href="vap.html">Bundle VAP</a>
+    <a href="cauti.html">Bundle CAUTI</a>
+    <a href="clabsi.html">Bundle CLABSI</a>
+    <a href="ssi.html">Bundle SSI</a>
+    <a href="handhygiene.html">Hand Hygiene</a>
+</div>
 
 </body>
 </html>
