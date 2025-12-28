@@ -3,110 +3,94 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Form Bundle VAP — Narrow</title>
+  <title>Form VAP — PPI Checklist</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#f4fbfa;
       --card:#ffffff;
-      /* WARNA DITINGKATKAN KONTRAS */
-      --primary:#045a4a; /* tombol utama (lebih gelap) */
-      --accent:#07a07e;  /* gradien atas */
+      --primary:#045a4a;
+      --accent:#07a07e;
       --muted:#617f79;
       --border:#e6f6f2;
       --radius:12px;
+      --max-width:546px; /* LEBAR SAMA seperti CAUTI (≈30% lebih lebar dari 420px) */
       --touch:48px;
-      --max-width:420px; /* lebar form */
     }
 
     *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:#063c36;-webkit-font-smoothing:antialiased}
     .wrap{max-width:var(--max-width);margin:18px auto;padding:12px}
     .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 12px 30px rgba(2,58,53,0.06);border:1px solid rgba(0,0,0,0.03)}
-
     h1{margin:0 0 12px;font-size:18px;color:var(--primary);text-align:center;font-weight:700}
 
     form{display:flex;flex-direction:column;gap:12px}
     .field{display:flex;flex-direction:column;gap:6px}
     label{font-size:14px;font-weight:600;color:#0c594f}
-    input[type="text"], input[type="date"], input[type="number"], textarea, select{
+    input[type="text"], input[type="date"], input[type="number"], select, textarea{
       width:100%;padding:11px 12px;border-radius:10px;border:2px solid var(--border);font-size:15px;background:#fff;outline:none;transition:border-color .12s,box-shadow .12s;
     }
-    input::placeholder{color:#9fbfb7}
+    textarea{min-height:80px;resize:vertical;padding-top:10px}
+    input::placeholder, textarea::placeholder{color:#9fbfb7}
     input:focus, textarea:focus, select:focus{border-color:var(--accent);box-shadow:0 8px 18px rgba(0,160,137,0.07)}
 
-    /* Vertical checkbox list */
+    /* Vertical checkbox list (one per row) */
     .checkbox-group{display:flex;flex-direction:column;gap:10px;margin-top:6px}
     .checkbox-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:linear-gradient(180deg,#fbfffe,#f8fffd);border:1px solid rgba(3,47,43,0.03);cursor:pointer;transition:transform .08s,box-shadow .12s;min-height:44px}
-    .checkbox-row:hover{ transform: translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,0.04); }
     .checkbox-row input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:4px;border:2px solid #cfeee8;background:#fff;position:relative;flex:0 0 auto}
     .checkbox-row input[type="checkbox"]:checked{ background: linear-gradient(180deg,var(--accent),var(--primary)); border-color: transparent; }
     .checkbox-row input[type="checkbox"]:checked::after{ content:""; position:absolute; left:7px; top:4px; width:6px; height:11px; border:solid white; border-width:0 2px 2px 0; transform:rotate(45deg); }
     .checkbox-label{font-size:15px;color:#074e47;font-weight:600}
+    .checkbox-row:hover{ transform: translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,0.04); }
 
     .helper{font-size:13px;color:var(--muted);margin-top:6px}
 
-    /* Buttons stacked, full width */
+    /* Buttons stacked */
     .actions{display:flex;flex-direction:column;gap:10px;margin-top:8px}
     .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;border:0;text-decoration:none;color:white;will-change:transform,box-shadow}
-    /* tombol utama: lebih kontras, warna solid + sedikit gradient */
     .btn-primary{
       background: linear-gradient(180deg,var(--accent),var(--primary));
-      color: #fff;
-      box-shadow: 0 12px 30px rgba(4,90,74,0.14);
+      color:#fff;
+      box-shadow:0 12px 30px rgba(4,90,74,0.14);
       width:100%;
-      border: none;
+      border:none;
       transition: transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms linear;
     }
-    /* tombol balik: tampil sederhana dengan teks 'Dashboard' */
     .btn-ghost{
-      background:#fff;
-      border:2px solid var(--primary);
-      color:var(--primary);
-      width:100%;
-      padding:11px;
-      font-weight:700;
-      border-radius:10px;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
+      background:#fff;border:2px solid var(--primary);color:var(--primary);width:100%;padding:11px;border-radius:10px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
       transition: transform 140ms ease, box-shadow 140ms ease;
     }
 
-    /* Hover animation (desktop pointer) */
     @media (hover: hover) and (pointer: fine){
       .btn-primary:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 22px 44px rgba(4,90,74,0.18); }
       .btn-primary:active{ transform: translateY(-3px) scale(0.998); box-shadow: 0 12px 26px rgba(4,90,74,0.12); }
       .btn-ghost:hover{ transform: translateY(-4px); box-shadow: 0 14px 30px rgba(4,90,74,0.08); }
-      .checkbox-row:hover{ transform: translateY(-3px); }
     }
-
-    /* Touch devices press feedback */
     @media (hover: none) and (pointer: coarse){
       .btn{transition:transform 120ms ease}
       .btn:active{ transform: translateY(-2px) scale(0.996) }
     }
 
-    /* Focus accessibility */
     .btn:focus-visible, .checkbox-row:focus-within{ outline:none; box-shadow:0 0 0 6px rgba(7,160,126,0.10); transform: translateY(-6px) scale(1.01); }
 
-    /* Small screens tweak */
-    @media (max-width:360px){
-      :root{ --max-width:340px; }
+    @media (max-width:520px){
+      :root{ --max-width: calc(100% - 32px); } /* beradaptasi di layar kecil */
+      .wrap{padding:10px}
       .card{padding:14px}
-      h1{font-size:17px}
-      input[type="text"], input[type="date"]{font-size:14px;padding:10px}
-      .checkbox-row{padding:9px}
     }
+
+    /* compact label helper */
+    .small{font-size:13px;color:var(--muted)}
+    .row-inline{display:flex;gap:8px}
+    .row-inline > *{flex:1}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card" role="region" aria-labelledby="title">
-      <h1 id="title">Form Bundle VAP</h1>
+      <h1 id="title">Form Bundle VAP — PPI Checklist</h1>
 
-      <form id="vapForm" autocomplete="off" novalidate>
+      <form id="vapPpiForm" autocomplete="off" novalidate>
         <div class="field">
           <label for="tanggal">Tanggal</label>
           <input id="tanggal" name="tanggal" type="date" />
@@ -119,60 +103,135 @@
 
         <div class="field">
           <label for="nama">Nama Pasien</label>
-          <input id="nama" name="nama" type="text" placeholder="Nama pasien" />
+          <input id="nama" name="nama" type="text" placeholder="Nama pasien" required />
         </div>
 
         <div class="field">
           <label for="rekam">No. Rekam Medis</label>
-          <input id="rekam" name="rekam" type="text" inputmode="numeric" placeholder="123456" />
+          <input id="rekam" name="rekam" type="text" placeholder="123456" inputmode="numeric" required />
+        </div>
+
+        <hr>
+
+        <div>
+          <label class="field-label">Bundle VAP (clinical)</label>
+          <div class="checkbox-group" role="group" aria-label="Bundle VAP clinical">
+            <label class="checkbox-row"><input type="checkbox" name="head_of_bed" /><span class="checkbox-label">Head of bed elevation 30°–45°</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="oral_hygiene_chg" /><span class="checkbox-label">Oral hygiene (CHG) sesuai protokol</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="sedation_vacation" /><span class="checkbox-label">Sedation vacation / daily spontaneous breathing trial</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="peptic_prophylaxis" /><span class="checkbox-label">Peptic ulcer prophylaxis (if indicated)</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="dvt_prophylaxis" /><span class="checkbox-label">DVT prophylaxis (if indicated)</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="subglottic_suction" /><span class="checkbox-label">Subglottic secretion drainage (if available)</span></label>
+          </div>
+        </div>
+
+        <div>
+          <label class="field-label">Parameter PPI (standar)</label>
+          <div class="checkbox-group" role="group" aria-label="PPI parameters">
+            <label class="checkbox-row"><input type="checkbox" name="hand_hygiene" /><span class="checkbox-label">Hand hygiene sebelum/ sesudah perawatan</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="ppe_used" /><span class="checkbox-label">PPE dipakai sesuai kategori (masker, sarung tangan, apron)</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="isolation" /><span class="checkbox-label">Isolation/precaution sesuai indikasi</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="closed_suction" /><span class="checkbox-label">Closed suction system digunakan jika tersedia</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="cuff_pressure" /><span class="checkbox-label">Monitoring cuff pressure (20–30 cm H2O)</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="circuit_change_policy" /><span class="checkbox-label">Kebijakan ventilator circuit sesuai protokol (tidak diganti rutin)</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="env_cleaning" /><span class="checkbox-label">Pembersihan & disinfeksi peralatan & lingkungan dilakukan</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="staff_training" /><span class="checkbox-label">Staf terlatih pada protokol PPI VAP</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="antibiotic_review" /><span class="checkbox-label">Antibiotic stewardship / review terapi antibiotik</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="documentation" /><span class="checkbox-label">Dokumentasi indikasi ventilator & rencana daily review</span></label>
+          </div>
+          <div class="small" style="margin-top:6px">Centang parameter PPI yang terpenuhi hari ini.</div>
         </div>
 
         <div class="field">
-          <label>Bundle checks</label>
-          <div class="checkbox-group" role="group" aria-label="Bundle VAP options">
-            <label class="checkbox-row"><input type="checkbox" name="head_of_bed" /><span class="checkbox-label">Head of bed 30°–45°</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="oral_hygiene" /><span class="checkbox-label">Oral Hygiene CHG</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="sedation_vacation" /><span class="checkbox-label">Sedation vacation</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="peptic_prophylaxis" /><span class="checkbox-label">Peptic ulcer prophylaxis</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="dvt_prophylaxis" /><span class="checkbox-label">DVT prophylaxis</span></label>
+          <label for="ppi_notes">Catatan PPI / Temuan (singkat)</label>
+          <textarea id="ppi_notes" name="ppi_notes" placeholder="Contoh: cuff pressure 25 cmH2O; oral care 4x/hari"></textarea>
+        </div>
+
+        <div class="field">
+          <label>Indikator Kuantitatif (opsional)</label>
+          <div class="row-inline">
+            <input id="hand_compliance" name="hand_compliance" type="number" min="0" max="100" placeholder="Hand hygiene %"/>
+            <input id="oral_freq" name="oral_freq" type="number" min="0" placeholder="Oral care /hari"/>
           </div>
-          <div class="helper">Pilih semua yang sesuai untuk pasien.</div>
+          <div class="small">Masukkan angka jika tersedia (opsional).</div>
+        </div>
+
+        <div class="field">
+          <label for="other_notes">Catatan Klinis Tambahan</label>
+          <textarea id="other_notes" name="other_notes" placeholder="Keluhan, kondisi ventilator, rencana extubation, dsb."></textarea>
         </div>
 
         <div class="actions">
           <button type="submit" class="btn btn-primary" id="saveBtn">Simpan</button>
-          <!-- TEXT DIUBAH MENJADI HANYA "Dashboard" -->
           <a class="btn-ghost" href="index.html" id="backBtn" role="button">Dashboard</a>
         </div>
+
+        <div class="helper">Data tersimpan lokal di perangkat (localStorage key: "vapRecords"). Hubungi saya jika mau kirim ke server atau export CSV/JSON.</div>
       </form>
     </div>
   </div>
 
   <script>
     (function(){
-      const form = document.getElementById('vapForm');
+      const form = document.getElementById('vapPpiForm');
       const saveBtn = document.getElementById('saveBtn');
+
       form.addEventListener('submit', function(e){
         e.preventDefault();
+
+        // Simple validation
+        if (!form.nama.value.trim()) { alert('Nama pasien harus diisi.'); form.nama.focus(); return; }
+        if (!form.rekam.value.trim()) { alert('No. Rekam Medis harus diisi.'); form.rekam.focus(); return; }
+
+        const checks = Array.from(form.querySelectorAll('input[type="checkbox"]'));
+        const checked = checks.filter(c => c.checked).map(c => c.name);
+
         const data = {
           tanggal: form.tanggal.value || '',
           ruangan: form.ruangan.value.trim() || '',
-          nama: form.nama.value.trim() || '',
-          rekam: form.rekam.value.trim() || '',
-          checks: Array.from(form.querySelectorAll('input[type="checkbox"]')).filter(c=>c.checked).map(c=>c.name),
+          nama: form.nama.value.trim(),
+          rekam: form.rekam.value.trim(),
+          bundle_checks: {
+            head_of_bed: !!form.head_of_bed?.checked,
+            oral_hygiene_chg: !!form.oral_hygiene_chg?.checked,
+            sedation_vacation: !!form.sedation_vacation?.checked,
+            peptic_prophylaxis: !!form.peptic_prophylaxis?.checked,
+            dvt_prophylaxis: !!form.dvt_prophylaxis?.checked,
+            subglottic_suction: !!form.subglottic_suction?.checked
+          },
+          ppi_parameters: {
+            hand_hygiene: !!form.hand_hygiene?.checked,
+            ppe_used: !!form.ppe_used?.checked,
+            isolation: !!form.isolation?.checked,
+            closed_suction: !!form.closed_suction?.checked,
+            cuff_pressure: !!form.cuff_pressure?.checked,
+            circuit_change_policy: !!form.circuit_change_policy?.checked,
+            env_cleaning: !!form.env_cleaning?.checked,
+            staff_training: !!form.staff_training?.checked,
+            antibiotic_review: !!form.antibiotic_review?.checked,
+            documentation: !!form.documentation?.checked
+          },
+          ppi_notes: form.ppi_notes.value.trim() || '',
+          hand_compliance: form.hand_compliance.value || '',
+          oral_freq: form.oral_freq.value || '',
+          other_notes: form.other_notes.value.trim() || '',
           savedAt: new Date().toISOString()
         };
+
         try {
           const list = JSON.parse(localStorage.getItem('vapRecords') || '[]');
           list.push(data);
           localStorage.setItem('vapRecords', JSON.stringify(list));
+
+          // small visual pulse on save
           if (saveBtn && saveBtn.animate) {
             saveBtn.animate([
               { transform: 'translateY(-6px) scale(1.02)' },
               { transform: 'translateY(-2px) scale(1.00)' }
             ], { duration: 260, easing: 'ease-out' });
           }
-          setTimeout(()=>{ alert('Data tersimpan.'); form.reset(); }, 140);
+
+          setTimeout(()=>{ alert('Data VAP (PPI) tersimpan.'); form.reset(); }, 140);
         } catch(err){
           console.error(err);
           alert('Gagal menyimpan: ' + (err.message || 'unknown'));
