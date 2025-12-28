@@ -1,47 +1,233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Bundle CAUTI</title>
-<style>
-body{margin:0;background:#E3F7F5;font-family:Arial, sans-serif;display:flex;justify-content:center;}
-.container{width:100%;max-width:600px;margin:40px auto;background:white;padding:30px;border-radius:15px;
-box-shadow:0 0 15px rgba(0,0,0,0.1);box-sizing:border-box;}
-h2{text-align:center;color:#00695c;margin-bottom:30px;font-size:26px;}
-label{font-weight:bold;color:#004d40;margin-top:18px;display:block;}
-input[type="text"],input[type="date"]{width:100%;padding:12px;border-radius:10px;border:2px solid #b2dfdb;
-margin-top:5px;margin-bottom:10px;box-sizing:border-box;}
-.checkbox-group label{display:flex;gap:10px;margin:6px 0;color:#004d40;}
-button{width:100%;padding:14px;background:#009688;color:white;border:none;border-radius:10px;font-weight:bold;
-margin-top:20px;cursor:pointer;}
-.back{display:block;width:100%;text-align:center;padding:12px;border-radius:10px;border:2px solid #009688;
-background:#E0F2F1;color:#00695c;margin-top:12px;text-decoration:none;font-weight:bold;}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Form CAUTI — Vertical Narrow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f4fbfa;
+      --card:#ffffff;
+      --primary:#045a4a;
+      --accent:#07a07e;
+      --muted:#617f79;
+      --border:#e6f6f2;
+      --radius:12px;
+      --max-width:420px;
+      --touch:48px;
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:#063c36;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:var(--max-width);margin:18px auto;padding:12px}
+    .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 12px 30px rgba(2,58,53,0.06);border:1px solid rgba(0,0,0,0.03)}
+    h1{margin:0 0 12px;font-size:18px;color:var(--primary);text-align:center;font-weight:700}
+
+    form{display:flex;flex-direction:column;gap:12px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    label{font-size:14px;font-weight:600;color:#0c594f}
+    input[type="text"], input[type="date"], input[type="datetime-local"], input[type="number"], textarea, select{
+      width:100%;padding:11px 12px;border-radius:10px;border:2px solid var(--border);font-size:15px;background:#fff;outline:none;transition:border-color .12s,box-shadow .12s;
+    }
+    textarea{min-height:80px;resize:vertical;padding-top:10px}
+    input::placeholder, textarea::placeholder{color:#9fbfb7}
+    input:focus, textarea:focus, select:focus{border-color:var(--accent);box-shadow:0 8px 18px rgba(0,160,137,0.07)}
+
+    /* vertical checkbox list */
+    .checkbox-group{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+    .checkbox-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:linear-gradient(180deg,#fbfffe,#f8fffd);border:1px solid rgba(3,47,43,0.03);cursor:pointer;transition:transform .08s,box-shadow .12s;min-height:44px}
+    .checkbox-row:hover{ transform: translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,0.04); }
+    .checkbox-row input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:4px;border:2px solid #cfeee8;background:#fff;position:relative;flex:0 0 auto}
+    .checkbox-row input[type="checkbox"]:checked{ background: linear-gradient(180deg,var(--accent),var(--primary)); border-color: transparent; }
+    .checkbox-row input[type="checkbox"]:checked::after{ content:""; position:absolute; left:7px; top:4px; width:6px; height:11px; border:solid white; border-width:0 2px 2px 0; transform:rotate(45deg); }
+    .checkbox-label{font-size:15px;color:#074e47;font-weight:600}
+
+    .helper{font-size:13px;color:var(--muted);margin-top:6px}
+
+    /* buttons stacked */
+    .actions{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;border:0;text-decoration:none;color:white;will-change:transform,box-shadow}
+    .btn-primary{
+      background: linear-gradient(180deg,var(--accent),var(--primary));
+      color:#fff;
+      box-shadow:0 12px 30px rgba(4,90,74,0.14);
+      width:100%;
+      border:none;
+      transition: transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms linear;
+    }
+    .btn-ghost{
+      background:#fff;border:2px solid var(--primary);color:var(--primary);width:100%;padding:11px;border-radius:10px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
+      transition: transform 140ms ease, box-shadow 140ms ease;
+    }
+
+    @media (hover: hover) and (pointer: fine){
+      .btn-primary:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 22px 44px rgba(4,90,74,0.18);}
+      .btn-primary:active{ transform: translateY(-3px) scale(0.998); box-shadow: 0 12px 26px rgba(4,90,74,0.12); }
+      .btn-ghost:hover{ transform: translateY(-4px); box-shadow: 0 14px 30px rgba(4,90,74,0.08); }
+      .checkbox-row:hover{ transform: translateY(-3px); }
+    }
+
+    @media (hover: none) and (pointer: coarse){
+      .btn{transition:transform 120ms ease}
+      .btn:active{ transform: translateY(-2px) scale(0.996) }
+    }
+
+    .btn:focus-visible, .checkbox-row:focus-within{ outline:none; box-shadow:0 0 0 6px rgba(7,160,126,0.10); transform: translateY(-6px) scale(1.01); }
+
+    @media (max-width:360px){
+      :root{ --max-width:340px; }
+      .card{padding:14px}
+      h1{font-size:17px}
+      input[type="text"], input[type="date"]{font-size:14px;padding:10px}
+      .checkbox-row{padding:9px}
+    }
+
+    /* small helper row for muted inline text */
+    .muted-row{font-size:13px;color:var(--muted);margin-top:6px}
+  </style>
 </head>
 <body>
-<div class="container">
+  <div class="wrap">
+    <div class="card" role="region" aria-labelledby="title">
+      <h1 id="title">Form CAUTI</h1>
 
-<h2>Form Bundle CAUTI</h2>
+      <form id="cautiForm" autocomplete="off" novalidate>
+        <div class="field">
+          <label for="tanggal">Tanggal</label>
+          <input id="tanggal" name="tanggal" type="date" />
+        </div>
 
-<label>Tanggal</label><input type="date">
-<label>Ruangan</label><input type="text" placeholder="Contoh: ICU">
-<label>Nama Pasien</label><input type="text" placeholder="Nama pasien">
-<label>No. Rekam Medis</label><input type="text" placeholder="123456">
+        <div class="field">
+          <label for="ruangan">Ruangan</label>
+          <input id="ruangan" name="ruangan" type="text" placeholder="Contoh: ICU" />
+        </div>
 
-<label>Checklist Prosedur:</label>
-<div class="checkbox-group">
-<label><input type="checkbox"> Hand hygiene sebelum tindakan</label>
-<label><input type="checkbox"> Teknik aseptik saat pemasangan</label>
-<label><input type="checkbox"> Indikasi kateter selalu dievaluasi</label>
-<label><input type="checkbox"> Sistem kateter tertutup</label>
-<label><input type="checkbox"> Posisi drainage lebih rendah dari kandung kemih</label>
-<label><input type="checkbox"> Pengosongan urine tanpa kontaminasi</label>
-</div>
+        <div class="field">
+          <label for="nama">Nama Pasien</label>
+          <input id="nama" name="nama" type="text" placeholder="Nama pasien" required />
+        </div>
 
-<button>Simpan</button>
-<a href="index.html" class="back">⟵ Kembali ke Dashboard</a>
+        <div class="field">
+          <label for="rekam">No. Rekam Medis</label>
+          <input id="rekam" name="rekam" type="text" placeholder="123456" inputmode="numeric" required />
+        </div>
 
-</div>
+        <div class="field">
+          <label for="catheter">Kateter Indwelling</label>
+          <select id="catheter" name="catheter">
+            <option value="">-- Pilih --</option>
+            <option value="yes">Ya - Indwelling</option>
+            <option value="no">Tidak</option>
+            <option value="suprapubic">Suprapubic</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="insertionDate">Tanggal Pemasangan Kateter</label>
+          <input id="insertionDate" name="insertionDate" type="date" />
+        </div>
+
+        <div class="field">
+          <label for="indication">Indikasi Pemasangan (singkat)</label>
+          <input id="indication" name="indication" type="text" placeholder="Mis. Retensi urin, operasi" />
+        </div>
+
+        <div>
+          <label class="field-label">Perawatan & Review (Checklist)</label>
+          <div class="checkbox-group" role="group" aria-label="CAUTI checks">
+            <label class="checkbox-row"><input type="checkbox" name="hand_hygiene" /><span class="checkbox-label">Hand hygiene sebelum/ sesudah</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="closed_system" /><span class="checkbox-label">Closed drainage system</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="secure_fixation" /><span class="checkbox-label">Secure fixation kateter</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="perineal_care" /><span class="checkbox-label">Perineal care rutin</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="daily_review" /><span class="checkbox-label">Daily review & indikasi dicatat</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="avoid_unnecessary" /><span class="checkbox-label">Hindari pemasangan yang tidak perlu</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="catheter_changed" /><span class="checkbox-label">Ganti kateter bila diperlukan</span></label>
+          </div>
+          <div class="helper">Centang tindakan perawatan yang dilakukan untuk pasien.</div>
+        </div>
+
+        <div class="field">
+          <label for="urine">Keterangan Urin (warna/volume/keluhan)</label>
+          <textarea id="urine" name="urine" placeholder="Mis. Jernih, sedikit/ banyak, ada bau/nyeri saat berkemih"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="antibiotic">Antibiotik saat ini (jika ada)</label>
+          <input id="antibiotic" name="antibiotic" type="text" placeholder="Nama & dosis (opsional)" />
+        </div>
+
+        <div class="field">
+          <label for="notes">Catatan Tambahan</label>
+          <textarea id="notes" name="notes" placeholder="Catatan lain yang relevan..."></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn btn-primary" id="saveBtn">Simpan</button>
+          <a class="btn-ghost" href="index.html" id="backBtn" role="button">Dashboard</a>
+        </div>
+
+        <div class="muted-row">Data akan disimpan sementara di perangkat (localStorage). Untuk integrasi server, beri tahu saya endpoint/format.</div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const form = document.getElementById('cautiForm');
+      const saveBtn = document.getElementById('saveBtn');
+
+      function showError(el, message) {
+        alert(message);
+        el.focus();
+      }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+
+        // Validasi sederhana
+        if (!form.nama.value.trim()) {
+          return showError(form.nama, 'Nama pasien harus diisi.');
+        }
+        if (!form.rekam.value.trim()) {
+          return showError(form.rekam, 'No. Rekam Medis harus diisi.');
+        }
+
+        const data = {
+          tanggal: form.tanggal.value || '',
+          ruangan: form.ruangan.value.trim() || '',
+          nama: form.nama.value.trim(),
+          rekam: form.rekam.value.trim(),
+          catheter: form.catheter.value || '',
+          insertionDate: form.insertionDate.value || '',
+          indication: form.indication.value.trim() || '',
+          checks: Array.from(form.querySelectorAll('input[type="checkbox"]')).filter(c=>c.checked).map(c=>c.name),
+          urine: form.urine.value.trim() || '',
+          antibiotic: form.antibiotic.value.trim() || '',
+          notes: form.notes.value.trim() || '',
+          savedAt: new Date().toISOString()
+        };
+
+        try {
+          const list = JSON.parse(localStorage.getItem('cautiRecords') || '[]');
+          list.push(data);
+          localStorage.setItem('cautiRecords', JSON.stringify(list));
+
+          // Small visual pulse on save
+          if (saveBtn && saveBtn.animate) {
+            saveBtn.animate([
+              { transform: 'translateY(-6px) scale(1.02)' },
+              { transform: 'translateY(-2px) scale(1.00)' }
+            ], { duration: 260, easing: 'ease-out' });
+          }
+
+          setTimeout(()=>{ alert('Data CAUTI tersimpan.'); form.reset(); }, 140);
+        } catch(err) {
+          console.error(err);
+          alert('Gagal menyimpan: ' + (err.message || 'unknown'));
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
