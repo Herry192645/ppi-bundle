@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Bundle VAP</title>
+
 <style>
     body {
         font-family: 'Poppins', sans-serif;
@@ -15,59 +22,53 @@
         width: 350px;
         padding: 25px;
         border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+        animation: fade 0.3s ease;
     }
 
+    @keyframes fade { from{opacity:0; transform:translateY(10px);} to{opacity:1;} }
+
     h2 {
-        font-weight: 600;
-        font-size: 20px;
-        color: #007a78;
         text-align: center;
-        margin-bottom: 18px;
+        color: #007a78;
+        margin-bottom: 20px;
+        font-size: 22px;
+        font-weight: 600;
     }
 
     label {
         display: block;
-        margin-top: 10px;
         font-weight: 500;
-        font-size: 14px;
+        margin: 8px 0 4px;
     }
 
-    input[type="text"],
-    input[type="date"] {
+    input, select {
         width: 100%;
-        border: 2px solid #cfeeed;
-        padding: 8px;
+        padding: 10px;
         border-radius: 8px;
-        outline: none;
+        border: 2px solid #cfeeed;
+        margin-bottom: 12px;
         font-size: 14px;
-        margin-bottom: 8px;
     }
 
-    .divider {
-        height: 1px;
-        background: #d9f2f1;
-        margin: 15px 0;
+    .checklist-container {
+        background: #f7fffe;
+        padding: 12px;
+        border-radius: 12px;
+        margin-top: 10px;
     }
 
-    .check-item {
+    .checklist-container label {
         display: flex;
         align-items: center;
         gap: 8px;
-        margin: 5px 0;
-        font-size: 14px;
-    }
-
-    input[type="checkbox"] {
-        width: 16px;
-        height: 16px;
-        accent-color: #007a78;
+        margin: 6px 0;
     }
 
     button {
         width: 100%;
         background: #007a78;
-        padding: 10px;
+        padding: 12px;
         font-size: 15px;
         color: white;
         font-weight: 600;
@@ -75,11 +76,45 @@
         border-radius: 10px;
         margin-top: 10px;
         cursor: pointer;
-        transition: 0.3s;
+        transition: 0.2s;
     }
 
     button:hover {
         background: #005f5d;
-        transform: scale(1.02);
+        transform: scale(1.03);
     }
 </style>
+</head>
+
+<body>
+<div class="form-card">
+
+    <h2>Form Bundle VAP</h2>
+
+    <label>Tanggal</label>
+    <input type="date">
+
+    <label>Ruangan</label>
+    <input type="text" placeholder="Contoh: ICU">
+
+    <label>Nama Pasien</label>
+    <input type="text" placeholder="Nama pasien">
+
+    <label>No. Rekam Medis</label>
+    <input type="text" placeholder="123456">
+
+    <div class="checklist-container">
+        <strong>Checklist Prosedur:</strong><br>
+        <label><input type="checkbox"> Head of bed 30°–45°</label>
+        <label><input type="checkbox"> Oral Hygiene CHG</label>
+        <label><input type="checkbox"> Sedation vacation</label>
+        <label><input type="checkbox"> Peptic ulcer prophylaxis</label>
+        <label><input type="checkbox"> DVT prophylaxis</label>
+    </div>
+
+    <button>Simpan</button>
+    <button type="button" onclick="window.location.href='index.html'">Kembali ke Dashboard</button>
+
+</div>
+</body>
+</html>
