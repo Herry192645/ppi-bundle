@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><title>SSI</title></head>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Form Bundle SSI</title>
+<style>
+/* sama seperti sebelumnya */
+body{margin:0;background:#E3F7F5;font-family:Arial}
+.container{width:85%;max-width:600px;margin:40px auto;background:#fff;padding:25px;border-radius:15px;box-shadow:0 0 10px rgba(0,0,0,.1)}
+h2{text-align:center;color:#00695c}
+label{margin-top:15px;display:block;font-weight:bold}
+input{width:100%;padding:12px;border-radius:10px;border:2px solid #b2dfdb;margin-top:5px}
+.checkbox-group label{display:flex;gap:8px;margin:5px 0}
+button{width:100%;padding:14px;background:#009688;color:white;border:none;border-radius:10px;margin-top:20px;font-weight:bold}
+.back{display:block;padding:12px;margin-top:10px;border-radius:10px;text-align:center;border:2px solid #009688;background:#E0F2F1;color:#00695c;text-decoration:none;font-weight:bold}
+</style>
+</head>
 <body>
 
-<h2>Form Bundle SSI (Infeksi Luka Operasi)</h2>
+<div class="container">
+<h2>Form Bundle SSI</h2>
 
-<label>Tanggal: <input type="date"></label><br><br>
-<label>Ruangan: <input type="text"></label><br><br>
-<label>Nama Pasien: <input type="text"></label><br><br>
+<label>Tanggal</label><input type="date">
+<label>Ruangan</label><input type="text">
+<label>Nama Pasien</label><input type="text">
+<label>No. Rekam Medis</label><input type="text">
 
-<p>Checklist:</p>
-<input type="checkbox"> Antibiotik profilaksis tepat waktu <br>
-<input type="checkbox"> Kontrol gula darah sesuai protokol <br>
-<input type="checkbox"> Persiapan kulit sesuai SOP <br>
-<input type="checkbox"> Sterilisasi ruangan memenuhi standar <br>
-<input type="checkbox"> Dressing luka terjaga <br>
+<h4>Checklist Prosedur:</h4>
+<div class="checkbox-group">
+<label><input type="checkbox"> Antibiotik profilaksis tepat waktu</label>
+<label><input type="checkbox"> Shaving tidak dilakukan</label>
+<label><input type="checkbox"> Kontrol glukosa</label>
+<label><input type="checkbox"> Normotermia terjaga</label>
+<label><input type="checkbox"> Antisepsis area operasi</label>
+</div>
 
-<br><button>Simpan</button>
-
-<br><br><a href="index.html">⬅︎ Kembali ke Dashboard</a>
-
+<button>Simpan</button>
+<a class="back" href="index.html">← Kembali ke Dashboard</a>
+</div>
 </body>
 </html>
