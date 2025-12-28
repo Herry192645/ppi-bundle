@@ -1,126 +1,231 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Bundle VAP</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Form Bundle VAP</title>
 
-<style>
-    body {
-        margin: 0;
-        background-color: #E3F7F5;
-        font-family: Arial, sans-serif;
+  <!-- Pilih font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #e9f7f6;
+      --card: #ffffff;
+      --primary: #00796b;
+      --accent: #009688;
+      --muted: #6b8f87;
+      --input-border: #cfeee8;
+      --radius: 12px;
     }
 
-    .container {
-        width: 85%;
-        max-width: 600px;
-        margin: 40px auto;
-        background: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg), #f3fdfc 60%);
+      color:#064a44;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
-    h2 {
-        text-align: center;
-        color: #00695c;
+    .wrap{
+      max-width:820px;
+      margin:36px auto;
+      padding:28px;
     }
 
-    label {
-        font-weight: bold;
-        display: block;
-        margin-top: 15px;
-        color: #004d40;
+    .card{
+      background:var(--card);
+      border-radius:18px;
+      padding:28px 28px;
+      box-shadow: 0 8px 28px rgba(3,47,43,0.08);
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    h1{
+      margin:0 0 18px;
+      text-align:center;
+      color:var(--primary);
+      font-size:20px;
+      font-weight:700;
+      letter-spacing:0.1px;
+    }
+
+    form{
+      display:grid;
+      gap:14px;
+    }
+
+    .row{
+      display:flex;
+      flex-direction:column;
+    }
+
+    label{
+      font-weight:600;
+      color:#0c594f;
+      margin-bottom:8px;
+      font-size:14px;
     }
 
     input[type="text"],
-    input[type="date"] {
-        width: 100%;
-        padding: 12px;
-        border-radius: 10px;
-        border: 2px solid #b2dfdb;
-        margin-top: 5px;
-        margin-bottom: 10px;
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:2px solid var(--input-border);
+      background: #fff;
+      font-size:14px;
+      outline:none;
+      transition:box-shadow .12s, border-color .12s, transform .06s;
     }
 
-    .checkbox-group {
-        margin-top: 15px;
+    input::placeholder{
+      color:#9fbfb7;
     }
 
-    .checkbox-group label {
-        font-weight: normal;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin: 5px 0;
+    input:focus,
+    textarea:focus,
+    select:focus{
+      border-color: var(--accent);
+      box-shadow: 0 6px 18px rgba(0,150,136,0.08);
     }
 
-    button {
-        width: 100%;
-        background: #009688;
-        color: white;
-        padding: 14px;
-        border: none;
-        border-radius: 10px;
-        margin-top: 20px;
-        font-size: 16px;
-        cursor: pointer;
-        font-weight: bold;
+    /* Checkbox grid + custom checkbox */
+    .checkbox-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap:10px 18px;
+      margin-top:4px;
     }
 
-    button:hover {
-        background: #00796b;
+    .chk{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 10px;
+      border-radius:10px;
+      background: #fbfffe;
+      border:1px solid rgba(6,80,74,0.03);
+      cursor:pointer;
+      user-select:none;
+      transition:background .12s, transform .06s;
+      font-size:14px;
+      color:#084e47;
     }
 
-    .back {
-        width: 100%;
-        display: block;
-        text-align: center;
-        padding: 12px;
-        border-radius: 10px;
-        background: #e0f2f1;
-        border: 2px solid #009688;
-        color: #00695c;
-        margin-top: 10px;
-        font-weight: bold;
-        text-decoration: none;
+    .chk:hover{ transform: translateY(-2px); }
+
+    .chk input[type="checkbox"]{
+      width:18px;
+      height:18px;
+      accent-color: var(--accent);
+      margin:0;
+      flex:0 0 auto;
     }
 
-    .back:hover {
-        background: #b2dfdb;
+    /* Button area */
+    .actions{
+      display:flex;
+      gap:12px;
+      margin-top:6px;
+      flex-wrap:wrap;
     }
 
-</style>
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border:0;
+      padding:12px 16px;
+      border-radius:10px;
+      font-weight:700;
+      cursor:pointer;
+      font-size:15px;
+      text-decoration:none;
+    }
+
+    .btn-primary{
+      background: linear-gradient(180deg,var(--accent), var(--primary));
+      color:white;
+      box-shadow: 0 8px 18px rgba(0,137,123,0.12);
+      flex:1;
+    }
+
+    .btn-ghost{
+      background: transparent;
+      border: 2px solid var(--accent);
+      color:var(--primary);
+      flex:0 0 auto;
+    }
+
+    /* helper + small text */
+    .helper{
+      font-size:13px;
+      color:var(--muted);
+      margin-top:6px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width:600px){
+      .wrap{padding:18px}
+      .card{padding:20px}
+      .btn-primary{flex-basis:100%}
+    }
+
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="card" role="region" aria-labelledby="title">
+      <h1 id="title">Form Bundle VAP</h1>
 
-<div class="container">
-    <h2>Form Bundle VAP</h2>
+      <form id="vapForm" autocomplete="off" novalidate>
+        <div class="row">
+          <label for="tanggal">Tanggal</label>
+          <input id="tanggal" name="tanggal" type="date" aria-label="Tanggal" />
+        </div>
 
-    <label>Tanggal</label>
-    <input type="date">
+        <div class="row">
+          <label for="ruangan">Ruangan</label>
+          <input id="ruangan" name="ruangan" type="text" placeholder="Contoh: ICU" />
+        </div>
 
-    <label>Ruangan</label>
-    <input type="text" placeholder="Contoh: ICU">
+        <div class="row">
+          <label for="nama">Nama Pasien</label>
+          <input id="nama" name="nama" type="text" placeholder="Nama pasien" />
+        </div>
 
-    <label>Nama Pasien</label>
-    <input type="text" placeholder="Nama pasien">
+        <div class="row">
+          <label for="rekam">No. Rekam Medis</label>
+          <input id="rekam" name="rekam" type="text" placeholder="123456" inputmode="numeric" />
+        </div>
 
-    <label>No. Rekam Medis</label>
-    <input type="text" placeholder="123456">
+        <div>
+          <label>Bundle checks</label>
+          <div class="checkbox-grid" role="group" aria-label="Bundle VAP options">
+            <label class="chk"><input type="checkbox" name="head_of_bed" /> Head of bed 30°–45°</label>
+            <label class="chk"><input type="checkbox" name="oral_hygiene" /> Oral Hygiene CHG</label>
+            <label class="chk"><input type="checkbox" name="sedation_vacation" /> Sedation vacation</label>
+            <label class="chk"><input type="checkbox" name="peptic_prophylaxis" /> Peptic ulcer prophylaxis</label>
+            <label class="chk"><input type="checkbox" name="dvt_prophylaxis" /> DVT prophylaxis</label>
+            <label class="chk"><input type="checkbox" name="subglottic_suction" /> Subglottic secretion drainage</label>
+          </div>
+          <div class="helper">Pilih semua yang sesuai untuk pasien. Klik Simpan untuk menyimpan catatan.</div>
+        </div>
 
-    <div class="checkbox-group">
-        <label><input type="checkbox"> Head of bed 30°–45°</label>
-        <label><input type="checkbox"> Oral Hygiene CHG</label>
-        <label><input type="checkbox"> Sedation vacation</label>
-        <label><input type="checkbox"> Peptic ulcer prophylaxis</label>
-        <label><input type="checkbox"> DVT prophylaxis</label>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Simpan</button>
+          <a class="btn btn-ghost" href="index.html">← Kembali ke Dashboard</a>
+        </div>
+      </form>
     </div>
-
-    <button>Simpan</button>
-    <a href="index.html" class="back">← Kembali ke Dashboard</a>
-</div>
-
+  </div>
 </body>
 </html>
