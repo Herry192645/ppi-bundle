@@ -1,24 +1,126 @@
 <!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><title>CAUTI</title></head>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Bundle VAP</title>
+
+<style>
+    body {
+        margin: 0;
+        background-color: #E3F7F5;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        width: 85%;
+        max-width: 600px;
+        margin: 40px auto;
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #00695c;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 15px;
+        color: #004d40;
+    }
+
+    input[type="text"],
+    input[type="date"] {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: 2px solid #b2dfdb;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+
+    .checkbox-group {
+        margin-top: 15px;
+    }
+
+    .checkbox-group label {
+        font-weight: normal;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 5px 0;
+    }
+
+    button {
+        width: 100%;
+        background: #009688;
+        color: white;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    button:hover {
+        background: #00796b;
+    }
+
+    .back {
+        width: 100%;
+        display: block;
+        text-align: center;
+        padding: 12px;
+        border-radius: 10px;
+        background: #e0f2f1;
+        border: 2px solid #009688;
+        color: #00695c;
+        margin-top: 10px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .back:hover {
+        background: #b2dfdb;
+    }
+
+</style>
+</head>
 <body>
 
-<h2>Form Bundle CAUTI</h2>
+<div class="container">
+    <h2>Form Bundle VAP</h2>
 
-<label>Tanggal: <input type="date"></label><br><br>
-<label>Ruangan: <input type="text"></label><br><br>
-<label>Nama Pasien: <input type="text"></label><br><br>
+    <label>Tanggal</label>
+    <input type="date">
 
-<p>Checklist:</p>
-<input type="checkbox"> Indikasi jelas pemasangan <br>
-<input type="checkbox"> Teknik aseptik saat pemasangan <br>
-<input type="checkbox"> Sirkuit tertutup terjaga <br>
-<input type="checkbox"> Evaluasi harian kebutuhan kateter <br>
-<input type="checkbox"> Drainase urin bebas hambatan <br>
+    <label>Ruangan</label>
+    <input type="text" placeholder="Contoh: ICU">
 
-<br><button>Simpan</button>
+    <label>Nama Pasien</label>
+    <input type="text" placeholder="Nama pasien">
 
-<br><br><a href="index.html">⬅︎ Kembali ke Dashboard</a>
+    <label>No. Rekam Medis</label>
+    <input type="text" placeholder="123456">
+
+    <div class="checkbox-group">
+        <label><input type="checkbox"> Head of bed 30°–45°</label>
+        <label><input type="checkbox"> Oral Hygiene CHG</label>
+        <label><input type="checkbox"> Sedation vacation</label>
+        <label><input type="checkbox"> Peptic ulcer prophylaxis</label>
+        <label><input type="checkbox"> DVT prophylaxis</label>
+    </div>
+
+    <button>Simpan</button>
+    <a href="index.html" class="back">← Kembali ke Dashboard</a>
+</div>
 
 </body>
 </html>
