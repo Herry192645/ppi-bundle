@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Form Bundle VAP — Judul Fixed</title>
+  <title>Form Bundle VAP — Judul Fixed + Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -14,64 +14,80 @@
       --muted:#617f79;
       --border:#e6f6f2;
       --max-width:546px;
-      --header-height:64px;   /* tinggi header */
-      --page-top-offset:12px; /* jarak header dari atas viewport */
+      --header-height:64px;
+      --page-top-offset:12px;
     }
 
     *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:#063c36;-webkit-font-smoothing:antialiased}
 
-    /* Container tengah */
-    .wrap{
-      max-width:var(--max-width);
-      margin:18px auto;
-      padding:12px;
-      position:relative;
-    }
+    /* Center container */
+    .wrap{max-width:var(--max-width);margin:18px auto;padding:12px;position:relative}
 
-    /* Visual card (body saja) */
-    .card {
-      background:var(--card);
-      border-radius:14px;
-      padding: 18px;
-      box-shadow:0 12px 30px rgba(2,58,53,0.06);
-      border:1px solid rgba(0,0,0,0.03);
-      /* jangan gunakan overflow hidden di sini supaya isi bisa digulir */
-    }
-
-    /* HEADER: fixed di viewport, sejajar dengan container */
+    /* Fixed header centered like card width */
     .fixed-header {
       position: fixed;
       top: var(--page-top-offset);
       left: 50%;
       transform: translateX(-50%);
       width: var(--max-width);
-      max-width: calc(100% - 24px); /* aman untuk layar kecil */
+      max-width: calc(100% - 24px);
       height: var(--header-height);
       background: var(--card);
       border-radius: 12px;
       display:flex;
       align-items:center;
-      justify-content:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:0 14px;
       z-index:1000;
       box-shadow: 0 10px 22px rgba(2,58,53,0.06);
       border: 1px solid rgba(0,0,0,0.03);
-      /* pastikan header TIDAK memiliki transform hover/focus */
     }
 
+    .fixed-header .title {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex:1;
+      justify-content:center; /* keep title centered */
+    }
     .fixed-header h1{
       margin:0;
       font-size:18px;
       color:var(--primary);
       font-weight:700;
+      text-align:center;
     }
 
-    /* Konten di bawah header: beri offset agar tidak tertutup */
-    .content {
-      margin-top: calc(var(--header-height) + var(--page-top-offset) + 8px);
+    /* Dashboard icon/link on the right */
+    .dashboard-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      width:48px;
+      height:48px;
+      border-radius:10px;
+      text-decoration:none;
+      color:var(--primary);
+      background:transparent;
+      transition: background .12s, transform .12s, box-shadow .12s;
+      flex:0 0 auto;
     }
+    .dashboard-link:hover{ background: rgba(7,160,126,0.06); transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.06); }
+    .dashboard-link:active{ transform: translateY(-1px); }
+    .dashboard-link:focus{ outline:none; box-shadow:0 0 0 6px rgba(7,160,126,0.10); border-radius:10px; }
 
-    /* FORM / STYLING seperti sebelumnya */
+    .dashboard-icon{ width:22px; height:22px; display:block; }
+
+    /* Main content offset so header doesn't cover it */
+    .content { margin-top: calc(var(--header-height) + var(--page-top-offset) + 8px); }
+
+    /* Card */
+    .card { background:var(--card); border-radius:14px; padding:18px; box-shadow:0 12px 30px rgba(2,58,53,0.06); border:1px solid rgba(0,0,0,0.03); }
+
+    /* Form styles */
     form{display:flex;flex-direction:column;gap:12px}
     .field{display:flex;flex-direction:column;gap:6px}
     label{font-size:14px;font-weight:600;color:#0c594f}
@@ -109,22 +125,33 @@
 
     .btn:focus-visible, .checkbox-row:focus-within{ outline:none; box-shadow:0 0 0 6px rgba(7,160,126,0.10); transform: translateY(-6px) scale(1.01); }
 
-    /* Responsive: pastikan header & card lebar aman di layar kecil */
+    /* Responsive adjustments */
     @media (max-width:520px){
       :root{ --max-width: calc(100% - 32px); --page-top-offset:6px; --header-height:56px; }
-      .fixed-header{ top: var(--page-top-offset); }
+      .fixed-header{ top: var(--page-top-offset); padding:0 10px; border-radius:10px; }
       .content{ margin-top: calc(var(--header-height) + var(--page-top-offset) + 6px); }
-      .fixed-header{ border-radius:10px; }
+      .dashboard-link{ width:44px; height:44px; }
     }
   </style>
 </head>
 <body>
-  <!-- Fixed header: tetap di viewport saat scroll -->
-  <div class="fixed-header" aria-hidden="false">
-    <h1>Form Bundle VAP — PPI Checklist</h1>
+  <!-- Fixed header with centered title and dashboard icon on the right -->
+  <div class="fixed-header" role="banner" aria-label="Form header">
+    <div style="width:48px"></div> <!-- spacer to keep title centered visually -->
+    <div class="title">
+      <h1>Form Bundle VAP — PPI Checklist</h1>
+    </div>
+
+    <!-- Dashboard link: change href to your dashboard path if needed -->
+    <a class="dashboard-link" href="index.html" title="Kembali ke Dashboard" aria-label="Kembali ke Dashboard">
+      <!-- simple house SVG -->
+      <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M3 10.5L12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5z" fill="currentColor" />
+      </svg>
+    </a>
   </div>
 
-  <!-- Main container; konten diberi margin-top agar tidak tertutup header -->
+  <!-- Page content -->
   <div class="wrap">
     <div class="content">
       <div class="card" role="region" aria-labelledby="title">
