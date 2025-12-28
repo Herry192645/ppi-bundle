@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Form CAUTI — Vertical Narrow</title>
+  <title>Form CAUTI — Wider</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -14,7 +14,8 @@
       --muted:#617f79;
       --border:#e6f6f2;
       --radius:12px;
-      --max-width:420px;
+      /* Lebar form dinaikkan ~30% dari 420px -> 546px */
+      --max-width:546px;
       --touch:48px;
     }
 
@@ -75,16 +76,12 @@
 
     .btn:focus-visible, .checkbox-row:focus-within{ outline:none; box-shadow:0 0 0 6px rgba(7,160,126,0.10); transform: translateY(-6px) scale(1.01); }
 
-    @media (max-width:360px){
-      :root{ --max-width:340px; }
+    /* Make sure on very small screens the layout still fits */
+    @media (max-width:520px){
+      :root{ --max-width: calc(100% - 32px); } /* fill available width with padding */
+      .wrap{padding:10px}
       .card{padding:14px}
-      h1{font-size:17px}
-      input[type="text"], input[type="date"]{font-size:14px;padding:10px}
-      .checkbox-row{padding:9px}
     }
-
-    /* small helper row for muted inline text */
-    .muted-row{font-size:13px;color:var(--muted);margin-top:6px}
   </style>
 </head>
 <body>
@@ -167,7 +164,7 @@
           <a class="btn-ghost" href="index.html" id="backBtn" role="button">Dashboard</a>
         </div>
 
-        <div class="muted-row">Data akan disimpan sementara di perangkat (localStorage). Untuk integrasi server, beri tahu saya endpoint/format.</div>
+        <div class="muted-row" style="margin-top:8px;font-size:13px;color:var(--muted)">Data disimpan sementara di perangkat (localStorage). Untuk menyimpan ke server, beri tahu endpoint/API.</div>
       </form>
     </div>
   </div>
@@ -185,13 +182,8 @@
       form.addEventListener('submit', function(e){
         e.preventDefault();
 
-        // Validasi sederhana
-        if (!form.nama.value.trim()) {
-          return showError(form.nama, 'Nama pasien harus diisi.');
-        }
-        if (!form.rekam.value.trim()) {
-          return showError(form.rekam, 'No. Rekam Medis harus diisi.');
-        }
+        if (!form.nama.value.trim()) return showError(form.nama, 'Nama pasien harus diisi.');
+        if (!form.rekam.value.trim()) return showError(form.rekam, 'No. Rekam Medis harus diisi.');
 
         const data = {
           tanggal: form.tanggal.value || '',
@@ -213,7 +205,6 @@
           list.push(data);
           localStorage.setItem('cautiRecords', JSON.stringify(list));
 
-          // Small visual pulse on save
           if (saveBtn && saveBtn.animate) {
             saveBtn.animate([
               { transform: 'translateY(-6px) scale(1.02)' },
