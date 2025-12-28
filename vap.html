@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Form Bundle VAP — Judul Fixed + Dashboard</title>
+  <title>Form Bundle VAP — Judul Fixed + Dashboard (Green Border)</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#f4fbfa;
       --card:#ffffff;
-      --primary:#045a4a;
+      --primary:#045a4a;    /* warna hijau utama untuk border */
       --accent:#07a07e;
       --muted:#617f79;
       --border:#e6f6f2;
@@ -42,7 +42,7 @@
       padding:0 14px;
       z-index:1000;
       box-shadow: 0 10px 22px rgba(2,58,53,0.06);
-      border: 1px solid rgba(0,0,0,0.03);
+      border: 2px solid var(--primary); /* <-- border hijau jelas */
     }
 
     .fixed-header .title {
