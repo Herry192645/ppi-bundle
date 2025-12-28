@@ -1,40 +1,332 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Hand Hygiene</title>
-<style>
-/* struktur desain tetap sama */
-body{margin:0;background:#E3F7F5;font-family:Arial}
-.container{width:85%;max-width:600px;margin:40px auto;background:white;padding:25px;border-radius:15px;box-shadow:0 0 10px rgba(0,0,0,.1)}
-h2{text-align:center;color:#00695c}
-label{margin-top:15px;display:block;font-weight:bold}
-input{width:100%;padding:12px;border-radius:10px;border:2px solid #b2dfdb;margin-top:5px}
-.checkbox-group label{display:flex;gap:8px;margin:5px 0}
-button{width:100%;padding:14px;background:#009688;color:white;border:none;border-radius:10px;margin-top:20px;font-weight:bold}
-.back{display:block;padding:12px;border-radius:10px;background:#E0F2F1;border:2px solid #009688;margin-top:10px;text-align:center;color:#00695c;text-decoration:none;font-weight:bold}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Form Hand Hygiene — Fixed Header (Green Border)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f4fbfa;
+      --card:#ffffff;
+      --primary:#045a4a;    /* hijau utama */
+      --accent:#07a07e;
+      --muted:#617f79;
+      --border:#e6f6f2;
+      --max-width:546px;
+      --header-height:64px;
+      --page-top-offset:12px;
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:#063c36;-webkit-font-smoothing:antialiased}
+
+    /* Center container */
+    .wrap{max-width:var(--max-width);margin:18px auto;padding:12px;position:relative}
+
+    /* Fixed header */
+    .fixed-header {
+      position: fixed;
+      top: var(--page-top-offset);
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--max-width);
+      max-width: calc(100% - 24px);
+      height: var(--header-height);
+      background: var(--card);
+      border-radius: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:0 14px;
+      z-index:1000;
+      box-shadow: 0 10px 22px rgba(2,58,53,0.06);
+      border: 2px solid var(--primary); /* border hijau */
+    }
+
+    .fixed-header .title {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex:1;
+      justify-content:center;
+    }
+    .fixed-header h1{
+      margin:0;
+      font-size:18px;
+      color:var(--primary);
+      font-weight:700;
+      text-align:center;
+    }
+
+    /* Dashboard icon/link on the right */
+    .dashboard-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      width:48px;
+      height:48px;
+      border-radius:10px;
+      text-decoration:none;
+      color:var(--primary);
+      background:transparent;
+      transition: background .12s, transform .12s, box-shadow .12s;
+      flex:0 0 auto;
+    }
+    .dashboard-link:hover{ background: rgba(7,160,126,0.06); transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.06); }
+    .dashboard-link:focus{ outline:none; box-shadow:0 0 0 6px rgba(7,160,126,0.10); border-radius:10px; }
+
+    .dashboard-icon{ width:22px; height:22px; display:block; }
+
+    /* Main content offset so header doesn't cover it */
+    .content { margin-top: calc(var(--header-height) + var(--page-top-offset) + 8px); }
+
+    /* Card */
+    .card { background:var(--card); border-radius:14px; padding:18px; box-shadow:0 12px 30px rgba(2,58,53,0.06); border:1px solid rgba(0,0,0,0.03); }
+
+    /* Form styles */
+    form{display:flex;flex-direction:column;gap:12px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .row-inline{display:flex;gap:8px}
+    .row-inline > *{flex:1}
+    label{font-size:14px;font-weight:600;color:#0c594f}
+    input[type="text"], input[type="date"], input[type="datetime-local"], input[type="number"], select, textarea{
+      width:100%;padding:11px 12px;border-radius:10px;border:2px solid var(--border);font-size:15px;background:#fff;outline:none;transition:border-color .12s,box-shadow .12s;
+    }
+    input[readonly]{background:#fbfffe}
+    textarea{min-height:80px;resize:vertical;padding-top:10px}
+    input::placeholder, textarea::placeholder{color:#9fbfb7}
+    input:focus, textarea:focus, select:focus{border-color:var(--accent);box-shadow:0 8px 18px rgba(0,160,137,0.07)}
+
+    .checkbox-group{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+    .checkbox-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:linear-gradient(180deg,#fbfffe,#f8fffd);border:1px solid rgba(3,47,43,0.03);cursor:pointer;transition:transform .08s,box-shadow .12s;min-height:44px}
+    .checkbox-row input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:4px;border:2px solid #cfeee8;background:#fff;position:relative;flex:0 0 auto}
+    .checkbox-row input[type="checkbox"]:checked{ background: linear-gradient(180deg,var(--accent),var(--primary)); border-color: transparent; }
+    .checkbox-row input[type="checkbox"]:checked::after{ content:""; position:absolute; left:7px; top:4px; width:6px; height:11px; border:solid white; border-width:0 2px 2px 0; transform:rotate(45deg); }
+    .checkbox-label{font-size:15px;color:#074e47;font-weight:600}
+    .checkbox-row:hover{ transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.04); }
+
+    .helper{font-size:13px;color:var(--muted);margin-top:6px}
+
+    .actions{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;border:0;text-decoration:none;color:white;will-change:transform,box-shadow}
+    .btn-primary{ background: linear-gradient(180deg,var(--accent),var(--primary)); color:#fff; box-shadow:0 12px 30px rgba(4,90,74,0.14); width:100%; border:none; transition: transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms linear; }
+    .btn-ghost{ background:#fff;border:2px solid var(--primary);color:var(--primary);width:100%;padding:11px;border-radius:10px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center; transition: transform 140ms ease, box-shadow 140ms ease; }
+
+    @media (hover: hover) and (pointer: fine){
+      .btn-primary:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 22px 44px rgba(4,90,74,0.18); }
+      .btn-primary:active{ transform: translateY(-3px) scale(0.998); box-shadow: 0 12px 26px rgba(4,90,74,0.12); }
+      .btn-ghost:hover{ transform: translateY(-4px); box-shadow: 0 14px 30px rgba(4,90,74,0.08); }
+    }
+    @media (hover: none) and (pointer: coarse){
+      .btn{transition:transform 120ms ease}
+      .btn:active{ transform: translateY(-2px) scale(0.996) }
+    }
+
+    .btn:focus-visible, .checkbox-row:focus-within{ outline:none; box-shadow:0 0 0 6px rgba(7,160,126,0.10); transform: translateY(-6px) scale(1.01); }
+
+    /* Responsive adjustments */
+    @media (max-width:520px){
+      :root{ --max-width: calc(100% - 32px); --page-top-offset:6px; --header-height:56px; }
+      .fixed-header{ top: var(--page-top-offset); padding:0 10px; border-radius:10px; }
+      .content{ margin-top: calc(var(--header-height) + var(--page-top-offset) + 6px); }
+      .dashboard-link{ width:44px; height:44px; }
+    }
+
+    /* small helper row */
+    .muted-row{font-size:13px;color:var(--muted);margin-top:6px}
+  </style>
 </head>
 <body>
+  <!-- Fixed header with centered title and dashboard icon on the right -->
+  <div class="fixed-header" role="banner" aria-label="Form header">
+    <div style="width:48px"></div> <!-- spacer to keep title centered visually -->
+    <div class="title">
+      <h1>Form Hand Hygiene</h1>
+    </div>
 
-<div class="container">
-<h2>Form Hand Hygiene</h2>
+    <!-- Dashboard link -->
+    <a class="dashboard-link" href="index.html" title="Kembali ke Dashboard" aria-label="Kembali ke Dashboard">
+      <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M3 10.5L12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5z" fill="currentColor" />
+      </svg>
+    </a>
+  </div>
 
-<label>Tanggal</label><input type="date">
-<label>Ruangan</label><input type="text">
-<label>Nama Petugas</label><input type="text">
+  <!-- Page content -->
+  <div class="wrap">
+    <div class="content">
+      <div class="card" role="region" aria-labelledby="title">
+        <form id="handForm" autocomplete="off" novalidate>
+          <div class="field">
+            <label for="tanggal">Tanggal</label>
+            <input id="tanggal" name="tanggal" type="date" />
+          </div>
 
-<h4>5 Moments WHO:</h4>
-<div class="checkbox-group">
-<label><input type="checkbox"> Sebelum kontak pasien</label>
-<label><input type="checkbox"> Sebelum prosedur aseptik</label>
-<label><input type="checkbox"> Setelah risiko cairan tubuh</label>
-<label><input type="checkbox"> Setelah kontak pasien</label>
-<label><input type="checkbox"> Setelah kontak lingkungan pasien</label>
-</div>
+          <div class="field">
+            <label for="waktu">Waktu (jam)</label>
+            <input id="waktu" name="waktu" type="time" />
+          </div>
 
-<button>Simpan</button>
-<a class="back" href="index.html">← Kembali ke Dashboard</a>
-</div>
+          <div class="field">
+            <label for="ruangan">Ruangan / Unit</label>
+            <input id="ruangan" name="ruangan" type="text" placeholder="Contoh: ICU A / Bed 12" />
+          </div>
+
+          <div class="field">
+            <label for="observer">Observer (Nama / ID)</label>
+            <input id="observer" name="observer" type="text" placeholder="Nama petugas pengamat" />
+          </div>
+
+          <div class="field">
+            <label for="staff">Staff yang diamati (Nama/ID)</label>
+            <input id="staff" name="staff" type="text" placeholder="Nama atau ID staf yang diamati" />
+          </div>
+
+          <div>
+            <label class="field-label">Moment (Five Moments of Hand Hygiene)</label>
+            <div class="checkbox-group" role="group" aria-label="Five Moments">
+              <label class="checkbox-row"><input type="checkbox" name="before_touch_patient" /><span class="checkbox-label">Before touching a patient</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="before_aseptic" /><span class="checkbox-label">Before aseptic procedure</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="after_body_fluid" /><span class="checkbox-label">After risk of body fluid exposure</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="after_touch_patient" /><span class="checkbox-label">After touching a patient</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="after_touch_patient_surroundings" /><span class="checkbox-label">After touching patient surroundings</span></label>
+            </div>
+            <div class="muted-row">Centang moment yang diamati untuk tindakan ini.</div>
+          </div>
+
+          <div class="row-inline">
+            <div class="field">
+              <label for="opportunities">Jumlah Opportunities</label>
+              <input id="opportunities" name="opportunities" type="number" min="0" placeholder="Mis. 10" />
+            </div>
+            <div class="field">
+              <label for="performed">Jumlah Performed (hand hygiene dilakukan)</label>
+              <input id="performed" name="performed" type="number" min="0" placeholder="Mis. 8" />
+            </div>
+          </div>
+
+          <div class="row-inline">
+            <div class="field">
+              <label for="compliance">Compliance (%)</label>
+              <input id="compliance" name="compliance" type="number" min="0" max="100" step="0.1" readonly />
+            </div>
+            <div class="field">
+              <label for="method">Metode</label>
+              <select id="method" name="method">
+                <option value="">-- Pilih --</option>
+                <option value="soap_water">Sabun & Air</option>
+                <option value="alcohol_rub">Alcohol-based handrub</option>
+                <option value="both">Keduanya</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="compliance_ok">Apakah compliance sesuai target unit?</label>
+            <select id="compliance_ok" name="compliance_ok">
+              <option value="">-- Pilih --</option>
+              <option value="yes">Ya</option>
+              <option value="no">Tidak</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="actionTaken">Action Taken (jika compliance rendah)</label>
+            <textarea id="actionTaken" name="actionTaken" placeholder="Mis. coaching, reminder, notify supervisor..."></textarea>
+          </div>
+
+          <div class="field">
+            <label for="notes">Catatan / Observasi tambahan</label>
+            <textarea id="notes" name="notes" placeholder="Catatan lain (mis. lokasi dispenser kosong, waktu sibuk)"></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-primary" id="saveBtn">Simpan</button>
+            <a class="btn-ghost" href="index.html" id="backBtn" role="button">Dashboard</a>
+          </div>
+
+          <div class="helper" style="margin-top:8px">Data tersimpan lokal di perangkat (localStorage key: "handHygieneRecords").</div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const form = document.getElementById('handForm');
+      const saveBtn = document.getElementById('saveBtn');
+      const opportunitiesEl = document.getElementById('opportunities');
+      const performedEl = document.getElementById('performed');
+      const complianceEl = document.getElementById('compliance');
+
+      function updateCompliance(){
+        const opp = Number(opportunitiesEl.value);
+        const perf = Number(performedEl.value);
+        if (!opp || opp <= 0) { complianceEl.value = ''; return; }
+        const pct = Math.min(100, Math.max(0, (perf / opp) * 100));
+        complianceEl.value = Math.round(pct * 10) / 10; // satu desimal
+      }
+
+      opportunitiesEl.addEventListener('input', updateCompliance);
+      performedEl.addEventListener('input', updateCompliance);
+
+      function showError(el, message) {
+        alert(message);
+        el.focus();
+      }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+
+        // Minimal validation: tanggal, observer, staff
+        if (!form.tanggal.value) return showError(form.tanggal, 'Tanggal harus diisi.');
+        if (!form.observer.value.trim()) return showError(form.observer, 'Observer harus diisi.');
+        if (!form.staff.value.trim()) return showError(form.staff, 'Staff yang diamati harus diisi.');
+
+        // collect checked moments
+        const moments = Array.from(form.querySelectorAll('input[type="checkbox"]'))
+          .filter(c => c.checked)
+          .map(c => c.name);
+
+        const data = {
+          tanggal: form.tanggal.value || '',
+          waktu: form.waktu.value || '',
+          ruangan: form.ruangan.value.trim() || '',
+          observer: form.observer.value.trim() || '',
+          staff: form.staff.value.trim() || '',
+          moments: moments,
+          opportunities: opportunitiesEl.value || '',
+          performed: performedEl.value || '',
+          compliance_pct: complianceEl.value || '',
+          method: form.method.value || '',
+          compliance_ok: form.compliance_ok.value || '',
+          actionTaken: form.actionTaken.value.trim() || '',
+          notes: form.notes.value.trim() || '',
+          savedAt: new Date().toISOString()
+        };
+
+        try {
+          const list = JSON.parse(localStorage.getItem('handHygieneRecords') || '[]');
+          list.push(data);
+          localStorage.setItem('handHygieneRecords', JSON.stringify(list));
+
+          if (saveBtn && saveBtn.animate) {
+            saveBtn.animate([
+              { transform: 'translateY(-6px) scale(1.02)' },
+              { transform: 'translateY(-2px) scale(1.00)' }
+            ], { duration: 260, easing: 'ease-out' });
+          }
+
+          setTimeout(()=>{ alert('Data Hand Hygiene tersimpan.'); form.reset(); complianceEl.value=''; }, 140);
+        } catch(err){
+          console.error(err);
+          alert('Gagal menyimpan: ' + (err.message || 'unknown'));
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
