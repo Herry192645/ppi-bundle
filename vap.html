@@ -9,20 +9,20 @@
     :root{
       --bg:#f4fbfa;
       --card:#ffffff;
-      --primary:#0b6b62;
-      --accent:#00a089;
+      /* WARNA DITINGKATKAN KONTRAS */
+      --primary:#045a4a; /* tombol utama (lebih gelap) */
+      --accent:#07a07e;  /* gradien atas */
       --muted:#617f79;
       --border:#e6f6f2;
       --radius:12px;
       --touch:48px;
-      --max-width:420px; /* Ubah angka ini untuk mengatur lebar form */
+      --max-width:420px; /* lebar form */
     }
 
     *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:#063c36;-webkit-font-smoothing:antialiased}
-    /* Centering & narrow container */
     .wrap{max-width:var(--max-width);margin:18px auto;padding:12px}
-    .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 10px 26px rgba(2,58,53,0.06);border:1px solid rgba(0,0,0,0.03)}
+    .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 12px 30px rgba(2,58,53,0.06);border:1px solid rgba(0,0,0,0.03)}
 
     h1{margin:0 0 12px;font-size:18px;color:var(--primary);text-align:center;font-weight:700}
 
@@ -49,14 +49,36 @@
     /* Buttons stacked, full width */
     .actions{display:flex;flex-direction:column;gap:10px;margin-top:8px}
     .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;border:0;text-decoration:none;color:white;will-change:transform,box-shadow}
-    .btn-primary{background:linear-gradient(180deg,var(--accent),var(--primary));box-shadow:0 10px 26px rgba(2,123,103,0.12);width:100%}
-    .btn-ghost{background:#fff;border:2px solid var(--border);color:var(--primary);width:100%;padding:11px}
+    /* tombol utama: lebih kontras, warna solid + sedikit gradient */
+    .btn-primary{
+      background: linear-gradient(180deg,var(--accent),var(--primary));
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(4,90,74,0.14);
+      width:100%;
+      border: none;
+      transition: transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms linear;
+    }
+    /* tombol balik: tampil sederhana dengan teks 'Dashboard' */
+    .btn-ghost{
+      background:#fff;
+      border:2px solid var(--primary);
+      color:var(--primary);
+      width:100%;
+      padding:11px;
+      font-weight:700;
+      border-radius:10px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition: transform 140ms ease, box-shadow 140ms ease;
+    }
 
     /* Hover animation (desktop pointer) */
     @media (hover: hover) and (pointer: fine){
-      .btn{transition:transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms linear}
-      .btn:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 36px rgba(3,66,58,0.12); }
-      .btn:active{ transform: translateY(-3px) scale(0.998); box-shadow: 0 10px 22px rgba(3,66,58,0.10); }
+      .btn-primary:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 22px 44px rgba(4,90,74,0.18); }
+      .btn-primary:active{ transform: translateY(-3px) scale(0.998); box-shadow: 0 12px 26px rgba(4,90,74,0.12); }
+      .btn-ghost:hover{ transform: translateY(-4px); box-shadow: 0 14px 30px rgba(4,90,74,0.08); }
       .checkbox-row:hover{ transform: translateY(-3px); }
     }
 
@@ -65,6 +87,9 @@
       .btn{transition:transform 120ms ease}
       .btn:active{ transform: translateY(-2px) scale(0.996) }
     }
+
+    /* Focus accessibility */
+    .btn:focus-visible, .checkbox-row:focus-within{ outline:none; box-shadow:0 0 0 6px rgba(7,160,126,0.10); transform: translateY(-6px) scale(1.01); }
 
     /* Small screens tweak */
     @media (max-width:360px){
@@ -116,7 +141,8 @@
 
         <div class="actions">
           <button type="submit" class="btn btn-primary" id="saveBtn">Simpan</button>
-          <a class="btn btn-ghost" href="index.html" id="backBtn" role="button">← Kembali ke Dashboard</a>
+          <!-- TEXT DIUBAH MENJADI HANYA "Dashboard" -->
+          <a class="btn-ghost" href="index.html" id="backBtn" role="button">Dashboard</a>
         </div>
       </form>
     </div>
