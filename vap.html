@@ -7,110 +7,95 @@
 
 <style>
     body {
-        background-color: #E3F8F6;
         font-family: Arial, sans-serif;
+        background-color: #DFF6F3;
+        margin: 0;
+        padding: 0;
         display: flex;
         justify-content: center;
-        padding: 20px;
-        margin: 0;
     }
 
     .card {
-    background: #ffffff;
-    max-width: 420px;
-    width: calc(100% - 80px); /* lebih ada jarak kanan kiri */
-    padding: 25px 30px;       /* tambah inner padding */
-    margin: 40px auto;        /* jarak atas bawah */
-    border-radius: 18px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-}
-
+        background: #ffffff;
+        max-width: 430px;
+        width: 90%;
+        padding: 25px;
+        margin: 40px auto;
+        border-radius: 18px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
 
     h2 {
         text-align: center;
-        color: #007b7f;
-        margin-bottom: 25px;
+        color: #00796B;
+        margin-top: 0;
+        margin-bottom: 20px;
     }
 
     label {
         font-weight: bold;
         display: block;
-        margin-top: 15px;
+        margin: 15px 0 5px;
+        color: #004D40;
     }
 
     input[type="text"], input[type="date"] {
         width: 100%;
+        max-width: 360px;
         padding: 12px;
+        border: 2px solid #B2DFDB;
         border-radius: 10px;
-        border: 2px solid #b7e9e9;
-        margin-top: 5px;
-        font-size: 15px;
+        font-size: 16px;
+        margin-bottom: 10px;
+        display: block;
     }
 
     .checklist {
-        margin-top: 20px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .check-item {
-        display: flex;
-        align-items: center;
-        margin: 8px 0;
-    }
-
-    .check-item input {
-        margin-right: 10px;
-        transform: scale(1.3);
-    }
-
-    .btn {
-        width: 100%;
-        background-color: #009688;
-        color: white;
-        padding: 12px;
-        border-radius: 10px;
-        border: none;
-        cursor: pointer;
-        margin-top: 20px;
+        margin: 15px 0;
         font-size: 16px;
-        font-weight: bold;
     }
 
-    .btn:hover {
-        background-color: #007b6e;
+    .checklist input {
+        margin-right: 8px;
     }
 
-    .btn-kembali {
+    button, .btn-back {
         width: 100%;
-        text-align: center;
-        display: block;
-        margin-top: 10px;
-        background-color: #e0f5f4;
-        padding: 10px;
+        max-width: 360px;
+        background-color: #009688;
+        padding: 12px;
+        border: none;
+        color: white;
         border-radius: 10px;
-        text-decoration: none;
-        color: #007b7f;
+        font-size: 17px;
+        cursor: pointer;
+        margin: 10px auto;
+        display: block;
         font-weight: bold;
-        border: 2px solid #b7e9e9;
     }
 
-    .btn-kembali:hover {
-        background-color: #c6efef;
+    .btn-back {
+        background-color: #e0f2f1;
+        color: #00695C;
+        border: 2px solid #009688;
     }
 
-    /* Perbaikan khusus HP */
+    .btn-back:hover {
+        background-color: #B2DFDB;
+    }
+
     @media (max-width: 480px) {
         .card {
-            width: calc(100% - 40px) !important;
+            width: 92%;
+            padding: 20px;
         }
     }
 </style>
 </head>
 
 <body>
-<div class="card">
 
+<div class="card">
     <h2>Form Bundle VAP</h2>
 
     <label>Tanggal</label>
@@ -125,29 +110,18 @@
     <label>No. Rekam Medis</label>
     <input type="text" placeholder="123456">
 
-    <div class="checklist">Checklist Prosedur:</div>
-
-    <div class="check-item">
-        <input type="checkbox"> <span>Head of bed 30°–45°</span>
-    </div>
-    <div class="check-item">
-        <input type="checkbox"> <span>Oral Hygiene CHG</span>
-    </div>
-    <div class="check-item">
-        <input type="checkbox"> <span>Sedation vacation</span>
-    </div>
-    <div class="check-item">
-        <input type="checkbox"> <span>Peptic ulcer prophylaxis</span>
-    </div>
-    <div class="check-item">
-        <input type="checkbox"> <span>DVT prophylaxis</span>
+    <label>Checklist Prosedur:</label>
+    <div class="checklist">
+        <label><input type="checkbox"> Head of bed 30°–45°</label>
+        <label><input type="checkbox"> Oral Hygiene CHG</label>
+        <label><input type="checkbox"> Sedation vacation</label>
+        <label><input type="checkbox"> Peptic ulcer prophylaxis</label>
+        <label><input type="checkbox"> DVT prophylaxis</label>
     </div>
 
-    <button class="btn">Simpan</button>
-
-    <a href="index.html" class="btn-kembali">⬅️ Kembali ke Dashboard</a>
-
+    <button>Simpan</button>
+    <a href="index.html" class="btn-back">⬅ Kembali ke Dashboard</a>
 </div>
+
 </body>
 </html>
-
