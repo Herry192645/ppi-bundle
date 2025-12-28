@@ -7,165 +7,196 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#e9f7f6;
+      --bg: #f2fbfa;
       --card:#ffffff;
-      --primary:#00796b;
-      --accent:#009688;
-      --muted:#607f79;
-      --input-border:#cfeee8;
+      --primary:#0c6b61;
+      --accent:#00a089;
+      --muted:#6b8f87;
+      --border:#e3f6f2;
       --radius:12px;
-      --touch-size:48px;
+      --shadow: 0 12px 28px rgba(2,58,53,0.06);
+      --touch:48px;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:#063c36;-webkit-font-smoothing:antialiased;}
-    .outer{max-width:820px;margin:18px auto;padding:12px}
-    .card{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 8px 22px rgba(3,47,43,0.06);border:1px solid rgba(0,0,0,0.03)}
-    header{display:flex;align-items:center;justify-content:center;margin-bottom:6px}
-    h1{font-size:18px;margin:0;color:var(--primary);font-weight:700}
-    form{display:flex;flex-direction:column;gap:12px}
-    .field{display:flex;flex-direction:column}
-    label{font-size:13px;font-weight:600;color:#0c594f;margin-bottom:6px}
-    input[type="text"], input[type="date"], input[type="number"], textarea, select{
-      font-size:16px;padding:12px 14px;border-radius:10px;border:2px solid var(--input-border);background:#fff;outline:none;
+    /* Basic reset */
+    *,*::before,*::after { box-sizing: border-box; }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#064a44;background:var(--bg);-webkit-font-smoothing:antialiased;}
+    .container{max-width:760px;margin:20px auto;padding:16px}
+    .card{background:var(--card);border-radius:14px;padding:22px;box-shadow:var(--shadow);border:1px solid rgba(3,47,43,0.03)}
+
+    h1{margin:0 0 14px;font-size:20px;color:var(--primary);text-align:center;font-weight:700}
+
+    form{display:flex;flex-direction:column;gap:14px}
+    label.field-label{font-weight:600;color:#0b5149;margin-bottom:8px;font-size:14px}
+
+    input[type="text"], input[type="date"], input[type="number"]{
+      width:100%;padding:12px 14px;border-radius:10px;border:2px solid var(--border);font-size:15px;background:#fff;outline:none;
     }
     input::placeholder{color:#9fbfb7}
-    input:focus, textarea:focus, select:focus{border-color:var(--accent);box-shadow:0 8px 20px rgba(0,150,136,0.06)}
-    input[type="date"]{height:44px;padding-left:12px;padding-right:12px}
+    input:focus{border-color:var(--accent);box-shadow:0 8px 18px rgba(0,160,137,0.07)}
 
-    .checkbox-list{display:flex;flex-direction:column;gap:10px;margin-top:4px}
-    .chk{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:#fbfffe;border:1px solid rgba(6,80,74,0.03);font-size:15px;cursor:pointer;min-height:var(--touch-size)}
-    .chk input[type="checkbox"]{width:20px;height:20px;margin:0;flex:0 0 auto;accent-color:var(--accent)}
+    /* CHECKBOX - vertical list, professional look */
+    .checkbox-group{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:4px;
+    }
 
-    .actions{display:flex;flex-direction:column;gap:10px;margin-top:6px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;border-radius:10px;font-weight:700;font-size:16px;cursor:pointer;border:0;text-decoration:none;color:white;will-change:transform,box-shadow}
-    .btn-primary{background:linear-gradient(180deg,var(--accent),var(--primary));box-shadow:0 8px 18px rgba(0,137,123,0.12)}
-    .btn-ghost{background:transparent;color:var(--primary);border:2px solid var(--accent);padding:10px 12px}
+    /* Each checkbox row */
+    .checkbox-row{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid rgba(0,0,0,0.03);
+      background: linear-gradient(180deg,#fbfffe,#f7fffd);
+      transition: background .12s, transform .08s;
+      cursor:pointer;
+      min-height:48px;
+    }
+    .checkbox-row:hover{ background: linear-gradient(180deg,#ffffff,#f3fffb); transform: translateY(-2px); }
+
+    /* Custom checkbox square */
+    .checkbox-row input[type="checkbox"]{
+      appearance:none;
+      -webkit-appearance:none;
+      width:20px;height:20px;border-radius:4px;border:2px solid #cfeee8;background:#fff;display:inline-block;position:relative;
+      flex:0 0 auto;cursor:pointer;
+    }
+    .checkbox-row input[type="checkbox"]:checked{
+      background: linear-gradient(180deg,var(--accent),var(--primary));
+      border-color: transparent;
+    }
+    /* Checkmark using pseudo-element */
+    .checkbox-row input[type="checkbox"]:checked::after{
+      content: "";
+      position: absolute;
+      left:5px; top:1px;
+      width:6px;height:11px;
+      border: solid white;
+      border-width:0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .checkbox-label{font-size:15px;color:#074e47;font-weight:600;}
 
     .helper{font-size:13px;color:var(--muted);margin-top:6px}
 
-    /* ANIMASI TOMBOL: hover (hanya pada perangkat dengan pointer) + fokus keyboard + active (tekan) */
-    /* Hanya terapkan hover pada perangkat yang mendukung pointer (desktop/laptop) */
-    @media (hover: hover) and (pointer: fine) {
-      .btn {
-        transition: transform 180ms cubic-bezier(.2,.9,.2,1), box-shadow 180ms cubic-bezier(.2,.9,.2,1);
-        transform: translateZ(0); /* improve rendering */
-      }
+    /* ACTIONS (buttons) */
+    .actions{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:10px;font-weight:700;font-size:16px;cursor:pointer;border:0;text-decoration:none;color:white;will-change:transform,box-shadow;
+    }
+    .btn-primary{background:linear-gradient(180deg,var(--accent),var(--primary));box-shadow:0 10px 28px rgba(2,123,103,0.12);width:100%}
+    .btn-ghost{background:#fff;border:2px solid var(--border);color:var(--primary);width:100%;padding:11px 14px}
 
-      .btn:hover {
-        transform: translateY(-6px) scale(1.02);
-        box-shadow: 0 18px 36px rgba(0,86,77,0.12);
-      }
-
-      .btn:active {
-        transform: translateY(-2px) scale(0.995);
-        box-shadow: 0 10px 22px rgba(0,86,77,0.10);
-      }
+    /* Hover animation only for pointer devices (desktop) */
+    @media (hover: hover) and (pointer: fine){
+      .btn{transition:transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms linear;}
+      .btn:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 40px rgba(3,66,58,0.12);}
+      .btn:active{ transform: translateY(-3px) scale(0.998); box-shadow: 0 12px 26px rgba(3,66,58,0.10);}
+      .checkbox-row:hover{ transform: translateY(-3px); }
     }
 
-    /* Fokus keyboard aksesibel */
-    .btn:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(0,150,136,0.12), 0 12px 28px rgba(0,86,77,0.10);
-      transform: translateY(-6px) scale(1.02);
+    /* Touch devices: provide press feedback */
+    @media (hover: none) and (pointer: coarse){
+      .btn{transition:transform 120ms ease;}
+      .btn:active{ transform: translateY(-2px) scale(0.996); }
     }
 
-    /* Untuk layar kecil: tombol tumpuk & penuh lebar */
-    @media (min-width:640px){
-      .card{padding:26px}
-      form{gap:16px}
+    /* Focus accessibility */
+    .btn:focus-visible, .checkbox-row:focus-within{ outline:none; box-shadow:0 0 0 5px rgba(0,160,137,0.10); transform: translateY(-6px) scale(1.01); }
+
+    /* Responsive: larger screens put some fields side-by-side if desired */
+    @media (min-width:720px){
       .row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-      .checkbox-list{flex-direction:row;flex-wrap:wrap;gap:10px}
-      .chk{min-width:calc(50% - 10px)}
-      .actions{flex-direction:row}
+      .actions{flex-direction:row;gap:12px}
       .btn-primary{flex:1}
-      .btn-ghost{flex:0 0 auto}
+      .btn-ghost{flex:0 0 auto;width:auto;padding:11px 18px}
     }
-
-    /* Jika perangkat layar sentuh, tambahkan efek pada saat tekan supaya terasa interaktif */
-    @media (hover: none) and (pointer: coarse) {
-      .btn {
-        transition: transform 120ms ease, box-shadow 120ms ease;
-      }
-      .btn:active {
-        transform: translateY(-2px) scale(0.998);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-      }
-    }
-
-    /* Accessibility small tweak */
-    .btn, .chk { -webkit-tap-highlight-color: rgba(0,0,0,0.05); }
   </style>
 </head>
 <body>
-  <div class="outer">
+  <div class="container">
     <div class="card" role="region" aria-labelledby="title">
-      <header><h1 id="title">Form Bundle VAP</h1></header>
+      <h1 id="title">Form Bundle VAP</h1>
 
       <form id="vapForm" autocomplete="off" novalidate>
-        <div class="field">
-          <label for="tanggal">Tanggal</label>
-          <input id="tanggal" name="tanggal" type="date" aria-label="Tanggal" />
+        <div class="row-2">
+          <div>
+            <label class="field-label" for="tanggal">Tanggal</label>
+            <input id="tanggal" name="tanggal" type="date" />
+          </div>
+          <div>
+            <label class="field-label" for="ruangan">Ruangan</label>
+            <input id="ruangan" name="ruangan" type="text" placeholder="Contoh: ICU" />
+          </div>
         </div>
 
-        <div class="field">
-          <label for="ruangan">Ruangan</label>
-          <input id="ruangan" name="ruangan" type="text" placeholder="Contoh: ICU" />
-        </div>
-
-        <div class="field">
-          <label for="nama">Nama Pasien</label>
+        <div>
+          <label class="field-label" for="nama">Nama Pasien</label>
           <input id="nama" name="nama" type="text" placeholder="Nama pasien" />
         </div>
 
-        <div class="field">
-          <label for="rekam">No. Rekam Medis</label>
+        <div>
+          <label class="field-label" for="rekam">No. Rekam Medis</label>
           <input id="rekam" name="rekam" type="text" inputmode="numeric" placeholder="123456" />
         </div>
 
-        <div class="field">
-          <label>Bundle checks</label>
-          <div class="checkbox-list" role="group" aria-label="Bundle VAP options">
-            <label class="chk"><input type="checkbox" name="head_of_bed" /> Head of bed 30°–45°</label>
-            <label class="chk"><input type="checkbox" name="oral_hygiene" /> Oral Hygiene CHG</label>
-            <label class="chk"><input type="checkbox" name="sedation_vacation" /> Sedation vacation</label>
-            <label class="chk"><input type="checkbox" name="peptic_prophylaxis" /> Peptic ulcer prophylaxis</label>
-            <label class="chk"><input type="checkbox" name="dvt_prophylaxis" /> DVT prophylaxis</label>
+        <div>
+          <label class="field-label">Bundle checks</label>
+          <div class="checkbox-group" role="group" aria-label="Bundle VAP options">
+            <label class="checkbox-row"><input type="checkbox" name="head_of_bed" /><span class="checkbox-label">Head of bed 30°–45°</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="oral_hygiene" /><span class="checkbox-label">Oral Hygiene CHG</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="sedation_vacation" /><span class="checkbox-label">Sedation vacation</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="peptic_prophylaxis" /><span class="checkbox-label">Peptic ulcer prophylaxis</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="dvt_prophylaxis" /><span class="checkbox-label">DVT prophylaxis</span></label>
           </div>
           <div class="helper">Pilih semua yang sesuai untuk pasien.</div>
         </div>
 
         <div class="actions">
           <button type="submit" class="btn btn-primary" id="saveBtn">Simpan</button>
-          <a href="index.html" class="btn btn-ghost" role="button">← Kembali ke Dashboard</a>
+          <a class="btn btn-ghost" href="index.html" id="backBtn" role="button">← Kembali ke Dashboard</a>
         </div>
       </form>
     </div>
   </div>
 
   <script>
+    // Simple form submit handler (saves to localStorage) and visual feedback
     (function(){
       const form = document.getElementById('vapForm');
+      const saveBtn = document.getElementById('saveBtn');
       form.addEventListener('submit', function(e){
         e.preventDefault();
+        // small "pulse" visual when saved
+        if (saveBtn) {
+          saveBtn.animate([
+            { transform: 'translateY(-6px) scale(1.02)', boxShadow: '0 20px 40px rgba(3,66,58,0.12)' },
+            { transform: 'translateY(-2px) scale(1.00)', boxShadow: '0 12px 26px rgba(3,66,58,0.10)' }
+          ], { duration: 300, easing: 'ease-out' });
+        }
+
         const data = {
           tanggal: form.tanggal.value || '',
           ruangan: form.ruangan.value.trim() || '',
           nama: form.nama.value.trim() || '',
           rekam: form.rekam.value.trim() || '',
-          checks: Array.from(form.querySelectorAll('input[type="checkbox"]'))
-                    .filter(ch => ch.checked).map(ch => ch.name)
+          checks: Array.from(form.querySelectorAll('input[type="checkbox"]')).filter(c=>c.checked).map(c=>c.name),
+          savedAt: new Date().toISOString()
         };
         try {
           const list = JSON.parse(localStorage.getItem('vapRecords') || '[]');
-          list.push(Object.assign({savedAt: new Date().toISOString()}, data));
+          list.push(data);
           localStorage.setItem('vapRecords', JSON.stringify(list));
-          // Visual feedback singkat: tombol sedikit "tertekan" sudah ditangani oleh CSS :active
-          alert('Data tersimpan di perangkat (localStorage).');
-          form.reset();
-        } catch (err) {
+          // brief success cue
+          setTimeout(()=>{ alert('Data tersimpan.'); form.reset(); }, 120);
+        } catch(err){
           console.error(err);
-          alert('Gagal menyimpan: ' + err.message);
+          alert('Gagal menyimpan: '+err.message);
         }
       });
     })();
