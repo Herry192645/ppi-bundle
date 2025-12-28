@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Form VAP</title>
+  <title>Form VAP — Judul Statis</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -13,16 +13,49 @@
       --accent:#07a07e;
       --muted:#617f79;
       --border:#e6f6f2;
-      --radius:12px;
-      --max-width:546px; /* LEBAR SAMA seperti CAUTI (≈30% lebih lebar dari 420px) */
-      --touch:48px;
+      --max-width:546px;
+      --header-height:64px; /* height header tetap untuk padding body agar tidak tertutup */
     }
 
     *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:#063c36;-webkit-font-smoothing:antialiased}
     .wrap{max-width:var(--max-width);margin:18px auto;padding:12px}
-    .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 12px 30px rgba(2,58,53,0.06);border:1px solid rgba(0,0,0,0.03)}
-    h1{margin:0 0 12px;font-size:18px;color:var(--primary);text-align:center;font-weight:700}
+    .card{
+      background:var(--card);
+      border-radius:14px;
+      padding:0; /* padding dipindah ke header/body agar sticky bekerja rapi */
+      box-shadow:0 12px 30px rgba(2,58,53,0.06);
+      border:1px solid rgba(0,0,0,0.03);
+      overflow: hidden;
+    }
+
+    /* Header statis (sticky) */
+    .card-header{
+      height:var(--header-height);
+      padding:14px 18px;
+      background:var(--card);
+      border-bottom:1px solid rgba(0,0,0,0.03);
+      position: sticky;
+      top: 12px; /* jarak dari viewport top agar tidak nempel */
+      z-index: 30;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      /* Jangan ada transform di header */
+    }
+    .card-header h1{
+      margin:0;
+      font-size:18px;
+      color:var(--primary);
+      font-weight:700;
+    }
+
+    /* body berisi form — beri padding-top agar tidak tertutup header */
+    .card-body{
+      padding: 16px 18px 22px;
+      padding-top: calc(12px + var(--header-height)); /* offset top + header height */
+      background: linear-gradient(180deg, transparent, transparent);
+    }
 
     form{display:flex;flex-direction:column;gap:12px}
     .field{display:flex;flex-direction:column;gap:6px}
@@ -34,33 +67,22 @@
     input::placeholder, textarea::placeholder{color:#9fbfb7}
     input:focus, textarea:focus, select:focus{border-color:var(--accent);box-shadow:0 8px 18px rgba(0,160,137,0.07)}
 
-    /* Vertical checkbox list (one per row) */
     .checkbox-group{display:flex;flex-direction:column;gap:10px;margin-top:6px}
     .checkbox-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:linear-gradient(180deg,#fbfffe,#f8fffd);border:1px solid rgba(3,47,43,0.03);cursor:pointer;transition:transform .08s,box-shadow .12s;min-height:44px}
     .checkbox-row input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:4px;border:2px solid #cfeee8;background:#fff;position:relative;flex:0 0 auto}
     .checkbox-row input[type="checkbox"]:checked{ background: linear-gradient(180deg,var(--accent),var(--primary)); border-color: transparent; }
     .checkbox-row input[type="checkbox"]:checked::after{ content:""; position:absolute; left:7px; top:4px; width:6px; height:11px; border:solid white; border-width:0 2px 2px 0; transform:rotate(45deg); }
     .checkbox-label{font-size:15px;color:#074e47;font-weight:600}
-    .checkbox-row:hover{ transform: translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,0.04); }
+    .checkbox-row:hover{ transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.04); }
 
     .helper{font-size:13px;color:var(--muted);margin-top:6px}
 
-    /* Buttons stacked */
     .actions{display:flex;flex-direction:column;gap:10px;margin-top:8px}
     .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;border:0;text-decoration:none;color:white;will-change:transform,box-shadow}
-    .btn-primary{
-      background: linear-gradient(180deg,var(--accent),var(--primary));
-      color:#fff;
-      box-shadow:0 12px 30px rgba(4,90,74,0.14);
-      width:100%;
-      border:none;
-      transition: transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms linear;
-    }
-    .btn-ghost{
-      background:#fff;border:2px solid var(--primary);color:var(--primary);width:100%;padding:11px;border-radius:10px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
-      transition: transform 140ms ease, box-shadow 140ms ease;
-    }
+    .btn-primary{ background: linear-gradient(180deg,var(--accent),var(--primary)); color:#fff; box-shadow:0 12px 30px rgba(4,90,74,0.14); width:100%; border:none; transition: transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms linear; }
+    .btn-ghost{ background:#fff;border:2px solid var(--primary);color:var(--primary);width:100%;padding:11px;border-radius:10px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center; transition: transform 140ms ease, box-shadow 140ms ease; }
 
+    /* Hover animation (desktop pointer) */
     @media (hover: hover) and (pointer: fine){
       .btn-primary:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 22px 44px rgba(4,90,74,0.18); }
       .btn-primary:active{ transform: translateY(-3px) scale(0.998); box-shadow: 0 12px 26px rgba(4,90,74,0.12); }
@@ -73,101 +95,88 @@
 
     .btn:focus-visible, .checkbox-row:focus-within{ outline:none; box-shadow:0 0 0 6px rgba(7,160,126,0.10); transform: translateY(-6px) scale(1.01); }
 
+    /* Small screens: reduce header top to avoid overlap with system UI */
     @media (max-width:520px){
-      :root{ --max-width: calc(100% - 32px); } /* beradaptasi di layar kecil */
+      :root{ --max-width: calc(100% - 32px); }
       .wrap{padding:10px}
-      .card{padding:14px}
+      .card-header{ top: 6px; }
+      .card-body{ padding-top: calc(6px + var(--header-height)); }
     }
-
-    /* compact label helper */
-    .small{font-size:13px;color:var(--muted)}
-    .row-inline{display:flex;gap:8px}
-    .row-inline > *{flex:1}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card" role="region" aria-labelledby="title">
-      <h1 id="title">Form Bundle VAP — PPI Checklist</h1>
+      <div class="card-header" aria-hidden="false">
+        <h1 id="title">Form Bundle VAP — PPI Checklist</h1>
+      </div>
 
-      <form id="vapPpiForm" autocomplete="off" novalidate>
-        <div class="field">
-          <label for="tanggal">Tanggal</label>
-          <input id="tanggal" name="tanggal" type="date" />
-        </div>
-
-        <div class="field">
-          <label for="ruangan">Ruangan</label>
-          <input id="ruangan" name="ruangan" type="text" placeholder="Contoh: ICU" />
-        </div>
-
-        <div class="field">
-          <label for="nama">Nama Pasien</label>
-          <input id="nama" name="nama" type="text" placeholder="Nama pasien" required />
-        </div>
-
-        <div class="field">
-          <label for="rekam">No. Rekam Medis</label>
-          <input id="rekam" name="rekam" type="text" placeholder="123456" inputmode="numeric" required />
-        </div>
-
-        <hr>
-
-        <div>
-          <label class="field-label">Bundle VAP (clinical)</label>
-          <div class="checkbox-group" role="group" aria-label="Bundle VAP clinical">
-            <label class="checkbox-row"><input type="checkbox" name="head_of_bed" /><span class="checkbox-label">Head of bed elevation 30°–45°</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="oral_hygiene_chg" /><span class="checkbox-label">Oral hygiene (CHG) sesuai protokol</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="sedation_vacation" /><span class="checkbox-label">Sedation vacation / daily spontaneous breathing trial</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="peptic_prophylaxis" /><span class="checkbox-label">Peptic ulcer prophylaxis (if indicated)</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="dvt_prophylaxis" /><span class="checkbox-label">DVT prophylaxis (if indicated)</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="subglottic_suction" /><span class="checkbox-label">Subglottic secretion drainage (if available)</span></label>
+      <div class="card-body">
+        <form id="vapPpiForm" autocomplete="off" novalidate>
+          <div class="field">
+            <label for="tanggal">Tanggal</label>
+            <input id="tanggal" name="tanggal" type="date" />
           </div>
-        </div>
 
-        <div>
-          <label class="field-label">Parameter PPI (standar)</label>
-          <div class="checkbox-group" role="group" aria-label="PPI parameters">
-            <label class="checkbox-row"><input type="checkbox" name="hand_hygiene" /><span class="checkbox-label">Hand hygiene sebelum/ sesudah perawatan</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="ppe_used" /><span class="checkbox-label">PPE dipakai sesuai kategori (masker, sarung tangan, apron)</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="isolation" /><span class="checkbox-label">Isolation/precaution sesuai indikasi</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="closed_suction" /><span class="checkbox-label">Closed suction system digunakan jika tersedia</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="cuff_pressure" /><span class="checkbox-label">Monitoring cuff pressure (20–30 cm H2O)</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="circuit_change_policy" /><span class="checkbox-label">Kebijakan ventilator circuit sesuai protokol (tidak diganti rutin)</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="env_cleaning" /><span class="checkbox-label">Pembersihan & disinfeksi peralatan & lingkungan dilakukan</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="staff_training" /><span class="checkbox-label">Staf terlatih pada protokol PPI VAP</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="antibiotic_review" /><span class="checkbox-label">Antibiotic stewardship / review terapi antibiotik</span></label>
-            <label class="checkbox-row"><input type="checkbox" name="documentation" /><span class="checkbox-label">Dokumentasi indikasi ventilator & rencana daily review</span></label>
+          <div class="field">
+            <label for="ruangan">Ruangan</label>
+            <input id="ruangan" name="ruangan" type="text" placeholder="Contoh: ICU" />
           </div>
-          <div class="small" style="margin-top:6px">Centang parameter PPI yang terpenuhi hari ini.</div>
-        </div>
 
-        <div class="field">
-          <label for="ppi_notes">Catatan PPI / Temuan (singkat)</label>
-          <textarea id="ppi_notes" name="ppi_notes" placeholder="Contoh: cuff pressure 25 cmH2O; oral care 4x/hari"></textarea>
-        </div>
-
-        <div class="field">
-          <label>Indikator Kuantitatif (opsional)</label>
-          <div class="row-inline">
-            <input id="hand_compliance" name="hand_compliance" type="number" min="0" max="100" placeholder="Hand hygiene %"/>
-            <input id="oral_freq" name="oral_freq" type="number" min="0" placeholder="Oral care /hari"/>
+          <div class="field">
+            <label for="nama">Nama Pasien</label>
+            <input id="nama" name="nama" type="text" placeholder="Nama pasien" required />
           </div>
-          <div class="small">Masukkan angka jika tersedia (opsional).</div>
-        </div>
 
-        <div class="field">
-          <label for="other_notes">Catatan Klinis Tambahan</label>
-          <textarea id="other_notes" name="other_notes" placeholder="Keluhan, kondisi ventilator, rencana extubation, dsb."></textarea>
-        </div>
+          <div class="field">
+            <label for="rekam">No. Rekam Medis</label>
+            <input id="rekam" name="rekam" type="text" placeholder="123456" inputmode="numeric" required />
+          </div>
 
-        <div class="actions">
-          <button type="submit" class="btn btn-primary" id="saveBtn">Simpan</button>
-          <a class="btn-ghost" href="index.html" id="backBtn" role="button">Dashboard</a>
-        </div>
+          <hr>
 
-        <div class="helper">Data tersimpan lokal di perangkat (localStorage key: "vapRecords"). Hubungi saya jika mau kirim ke server atau export CSV/JSON.</div>
-      </form>
+          <div>
+            <label class="field-label">Bundle VAP (clinical)</label>
+            <div class="checkbox-group" role="group" aria-label="Bundle VAP clinical">
+              <label class="checkbox-row"><input type="checkbox" name="head_of_bed" /><span class="checkbox-label">Head of bed elevation 30°–45°</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="oral_hygiene_chg" /><span class="checkbox-label">Oral hygiene (CHG) sesuai protokol</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="sedation_vacation" /><span class="checkbox-label">Sedation vacation / daily SBT</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="peptic_prophylaxis" /><span class="checkbox-label">Peptic ulcer prophylaxis (if indicated)</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="dvt_prophylaxis" /><span class="checkbox-label">DVT prophylaxis (if indicated)</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="subglottic_suction" /><span class="checkbox-label">Subglottic secretion drainage</span></label>
+            </div>
+          </div>
+
+          <div>
+            <label class="field-label">Parameter PPI (standar)</label>
+            <div class="checkbox-group" role="group" aria-label="PPI parameters">
+              <label class="checkbox-row"><input type="checkbox" name="hand_hygiene" /><span class="checkbox-label">Hand hygiene</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="ppe_used" /><span class="checkbox-label">PPE sesuai kategori</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="isolation" /><span class="checkbox-label">Isolation sesuai indikasi</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="closed_suction" /><span class="checkbox-label">Closed suction system</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="cuff_pressure" /><span class="checkbox-label">Monitoring cuff pressure</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="circuit_change_policy" /><span class="checkbox-label">Circuit policy sesuai protokol</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="env_cleaning" /><span class="checkbox-label">Pembersihan & disinfeksi</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="staff_training" /><span class="checkbox-label">Staf terlatih</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="antibiotic_review" /><span class="checkbox-label">Antibiotic stewardship</span></label>
+              <label class="checkbox-row"><input type="checkbox" name="documentation" /><span class="checkbox-label">Dokumentasi indikasi & review</span></label>
+            </div>
+            <div class="small" style="margin-top:6px">Centang parameter PPI yang terpenuhi hari ini.</div>
+          </div>
+
+          <div class="field">
+            <label for="ppi_notes">Catatan PPI / Temuan (singkat)</label>
+            <textarea id="ppi_notes" name="ppi_notes" placeholder="Contoh: cuff pressure 25 cmH2O; oral care 4x/hari"></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-primary" id="saveBtn">Simpan</button>
+            <a class="btn-ghost" href="index.html" id="backBtn" role="button">Dashboard</a>
+          </div>
+
+          <div class="helper" style="margin-top:8px">Data tersimpan lokal di perangkat (localStorage key: "vapRecords").</div>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -178,13 +187,8 @@
 
       form.addEventListener('submit', function(e){
         e.preventDefault();
-
-        // Simple validation
-        if (!form.nama.value.trim()) { alert('Nama pasien harus diisi.'); form.nama.focus(); return; }
-        if (!form.rekam.value.trim()) { alert('No. Rekam Medis harus diisi.'); form.rekam.focus(); return; }
-
-        const checks = Array.from(form.querySelectorAll('input[type="checkbox"]'));
-        const checked = checks.filter(c => c.checked).map(c => c.name);
+        if (!form.nama.value.trim()){ alert('Nama pasien harus diisi.'); form.nama.focus(); return; }
+        if (!form.rekam.value.trim()){ alert('No. Rekam Medis harus diisi.'); form.rekam.focus(); return; }
 
         const data = {
           tanggal: form.tanggal.value || '',
@@ -212,9 +216,6 @@
             documentation: !!form.documentation?.checked
           },
           ppi_notes: form.ppi_notes.value.trim() || '',
-          hand_compliance: form.hand_compliance.value || '',
-          oral_freq: form.oral_freq.value || '',
-          other_notes: form.other_notes.value.trim() || '',
           savedAt: new Date().toISOString()
         };
 
@@ -222,15 +223,12 @@
           const list = JSON.parse(localStorage.getItem('vapRecords') || '[]');
           list.push(data);
           localStorage.setItem('vapRecords', JSON.stringify(list));
-
-          // small visual pulse on save
           if (saveBtn && saveBtn.animate) {
             saveBtn.animate([
               { transform: 'translateY(-6px) scale(1.02)' },
               { transform: 'translateY(-2px) scale(1.00)' }
             ], { duration: 260, easing: 'ease-out' });
           }
-
           setTimeout(()=>{ alert('Data VAP (PPI) tersimpan.'); form.reset(); }, 140);
         } catch(err){
           console.error(err);
@@ -241,4 +239,3 @@
   </script>
 </body>
 </html>
-
